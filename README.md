@@ -1,34 +1,17 @@
 
-**Read: _[Story behind Postwoman](https://dev.to/liyasthomas/i-created-postwoman-an-online-open-source-api-request-builder-41md), [Postwoman v1.0](https://dev.to/liyasthomas/postwoman-v1-0-a-free-fast-beautiful-alternative-to-postman-mn0)_**
-
-**Chat: _[Telegram](https://t.me/postwoman_app), [Discord](https://discord.gg/GAMWxmR)_**
-
-**Donate: _[PayPal](https://www.paypal.me/liyascthomas), [Open Collective](https://opencollective.com/postwoman), [Patreon](https://www.patreon.com/liyasthomas)_**
-
-<div align="center">
-  <br>
-  <img src="static/images/screenshot1.png" alt="Screenshot1" width="100%">
-  <br>
-</div>
-
 ### Features ✨
 
 ❤️ **Lightweight**: Crafted with minimalistic UI design - simple design is the best design.
 
 ⚡️ **Fast**: Send requests and get/copy responses in real-time - fast software is the best software.
 
-**Methods:**
- - `GET` - Retrieve information about the REST API resource
- - `HEAD` - Retrieve response headers identical to those of a GET request, but without the response body.
- - `POST` - Create a REST API resource
- - `PUT` - Update a REST API resource
- - `DELETE` - Delete a REST API resource or related component
- - `CONNECT` - Establishes a tunnel to the server identified by the target resource
- - `OPTIONS` - Describe the communication options for the target resource
- - `TRACE` - Performs a message loop-back test along the path to the target resource
- - `PATCH` - Apply partial modifications to a REST API resource
- - `<custom>` - Some APIs use custom request methods such as `LIST`. Type in your custom methods.
-
+**Models:**
+ - `Random Forest` - Random forests or random decision forests are an ensemble learning method for classification, regression.
+ - `XGBoost` - XGBoost is an open-source software library which provides a gradient boosting.
+ - `Deep Learning` - Multilayer Perceptron
+ - `CatBoost` - CatBoost is an open-source gradient boosting on decision trees library with categorical features support out of the box.
+ - `Logistic Regression` - In statistics, the logistic model is used to model the probability of a certain class or event.
+ 
 🌈 **Make it yours**: Customizable combinations for background, foreground and accent colors: because customization is freedom. [Customize now ✨](https://postwoman.io/settings).
 
 **Customizations:**
