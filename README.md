@@ -32,7 +32,7 @@
 
 
 🚀 **Interface Using shiny:**
--_Shiny is an R package that makes it easy to build interactive web apps straight from R.it is used for showing the insight of the data and prediction._
+_Shiny is an R package that makes it easy to build interactive web apps straight from R.it is used for showing the insight of the data and prediction._
 
 
 <div align="center">
