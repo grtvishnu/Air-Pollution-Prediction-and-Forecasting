@@ -8,7 +8,7 @@
 **Models:**
  - `Random Forest` - Random forests or random decision forests are an ensemble learning method for classification, regression.
  - `XGBoost` - XGBoost is an open-source software library which provides a gradient boosting.
- - `Deep Learning` - Multilayer Perceptron
+ - `Deep Learning` - Multilayer Perceptron, Deep learning is part of a broader family of machine learning methods based on artificial   neural networks with representation learning.
  - `CatBoost` - CatBoost is an open-source gradient boosting on decision trees library with categorical features support out of the box.
  - `Logistic Regression` - In statistics, the logistic model is used to model the probability of a certain class or event.
  
