@@ -1,9 +1,9 @@
 
 ### Features ✨
 
-❤️ **Lightweight**: Crafted with minimalistic UI design - simple design is the best design.
+❤️ **Accurate**: More accurate with Advanced models like CatBoost.
 
- **Fast**: Send requests and get/copy responses in real-time - fast software is the best software.
+
 
 ⚡️**Models:**
  - `Random Forest` - Random forests or random decision forests are an ensemble learning method for classification, regression.
