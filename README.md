@@ -13,7 +13,7 @@
  - `Logistic Regression` - the logistic model is used to model the probability of a certain class or event.
  
 
-**Detection of Air pollution:**
+🌈**Detection of Air pollution:**
 
  - using Logistic Regression That can detect the air pollution and classify air pollution is high or not
 
