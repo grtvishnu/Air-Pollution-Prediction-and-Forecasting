@@ -10,7 +10,7 @@
  - `XGBoost` - XGBoost is an open-source software library which provides a gradient boosting.
  - `Deep Learning` - Multilayer Perceptron, Deep learning is part of a broader family of machine learning methods based on artificial   neural networks with representation learning.
  - `CatBoost` - CatBoost is an open-source gradient boosting on decision trees library with categorical features support out of the box.
- - `Logistic Regression` - In statistics, the logistic model is used to model the probability of a certain class or event.
+ - `Logistic Regression` - the logistic model is used to model the probability of a certain class or event.
  
 
 **Detection of Air pollution:**
