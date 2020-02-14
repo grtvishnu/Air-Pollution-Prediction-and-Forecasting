@@ -7,8 +7,8 @@ library(neuralnet)
 library(tensorflow)
 
 # Data
-air <- read.csv(file = "chennai18.csv")
-air <- air[,5:10]
+air <- read.csv(file = "orginal.csv")
+#air <- air[,5:10]
 air$PM25 <- as.numeric(air$PM25)
 str(air)
 
@@ -17,15 +17,15 @@ data %<>% mutate_if(is.factor, as.numeric)
 # Neural Network Visualization
 n <- neuralnet(PM25 ~ Temperature+Humidity+Wind.Speed..km.h.+Visibility+Pressure+so2+no2+Rainfall+PM10,
                data = air,
-               hidden = c(1000,500,200),
+               hidden = c(10,5,2),
                linear.output = F,
                lifesign = 'full',
                rep=1,)
 plot(n,
      col.hidden = 'darkgreen',
      col.hidden.synapse = 'darkgreen',
-     show.weights = F,
-     information = F,
+     show.weights = T,
+     information = T,
      fill = 'lightblue')
 
 # Matrix
@@ -40,10 +40,6 @@ test <- air[ind==2, 1:5]
 trainingtarget <- air[ind==1, 6]
 testtarget <- air[ind==2, 6]
 
-Sys.setenv("CUDA_VISIBLE_DEVICES" = -1)   
-library(cudart64)                                                                  
-use_backend("tensorflow") 
-install.packages("cudart64")
 # Normalize
 m <- colMeans(training)
 s <- apply(training, 2, sd)
