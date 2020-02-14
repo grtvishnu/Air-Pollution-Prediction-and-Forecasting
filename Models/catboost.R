@@ -1,12 +1,13 @@
-# install.packages('devtools')
-# library(devtools)
-# devtools::install_github('catboost/catboost', subdir = 'catboost/R-package')
-# install.packages("catboost")
+ # install.packages('devtools')
+ # library(devtools)
+ # devtools::install_github('catboost/catboost', subdir = 'catboost/R-package')
+ # install.packages("catboost")
 library(catboost)
 library(caret)
 library(dplyr)
-air <- read.csv(file = "chennai18.csv")
-air <- air[,5:10]
+library(plotly)
+air <- read.csv(file = "orginal.csv")
+# air <- air[,2:11]
 str(air)
 # air$PM25 <- as.numeric(air$PM25)
 # labels <- train$PM25
@@ -57,11 +58,6 @@ saveRDS(model, "catboost_model_chennai.RDS")
 catboost.get_feature_importance(model, 
                                 pool = NULL, 
                                 type = 'FeatureImportance',
-                                thread_count = -1)
+                                thread_count = 6)
 
 
-#object importence
-
-catboost.get_object_importance(model,
-                               train_pool,
-                               train_pool)
