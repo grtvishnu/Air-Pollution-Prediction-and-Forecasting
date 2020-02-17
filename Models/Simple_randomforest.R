@@ -13,7 +13,6 @@ test <- air[ind==2, ]
 set.seed(222)
 rf <- randomForest(PM25~., data = training,
                    ntree = 300,
-                   mtry = 12,
                    importance = T,
                    proximity = T)
 print(rf)
