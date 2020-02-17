@@ -1,11 +1,6 @@
-setwd("C:/Users/optra/Desktop/data")
-setwd("~/New/india all/Chennai")
-air_pollu <- read.csv(file = "orginal_7.csv")
-str(air_pollu)
-table(is.na(air_pollu))
 
-air_pollu <- air_pollu[, 2:11]
- 
+air <- read.csv(file = "ch.csv")
+
 # Correlation of one by one features
 
 res <- cor.test(air$`CO Mean`, air$`NO2 Mean`, method = "pearson")
