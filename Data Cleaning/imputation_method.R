@@ -52,5 +52,5 @@ newdata <- complete(impute, 2 )
 # Distribution of observed/imputed values
 stripplot(impute, pch = 20, cex = 1.2)
 xyplot(impute, so2 ~ no2 | .imp, pch = 20, cex = 1.4)
-write.csv(newdata, "new_c6.csv")
+write.csv(newdata, "new_c5.csv")
 
