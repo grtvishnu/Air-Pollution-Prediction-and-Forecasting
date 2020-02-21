@@ -15,9 +15,9 @@ str(air)
 data %<>% mutate_if(is.factor, as.numeric)
 
 # Neural Network Visualization
-n <- neuralnet(PM25 ~ Temperature+Humidity+Wind.Speed..km.h.+Visibility+Pressure+so2+no2+Rainfall+PM10,
+n <- neuralnet(AQI ~ Temperature+Humidity+Wind.Speed..km.h.+Visibility+Pressure+so2+no2+Rainfall+PM10+PM25,
                data = air,
-               hidden = c(10,5,2),
+               hidden = c(10,5),
                linear.output = F,
                lifesign = 'full',
                rep=1,)
@@ -35,10 +35,10 @@ dimnames(air) <- NULL
 # Partition
 set.seed(1234)
 ind <- sample(2, nrow(air), replace = T, prob = c(.7, .3))
-training <- air[ind==1,1:5]
-test <- air[ind==2, 1:5]
-trainingtarget <- air[ind==1, 6]
-testtarget <- air[ind==2, 6]
+training <- air[ind==1,1:10]
+test <- air[ind==2, 1:10]
+trainingtarget <- air[ind==1, 11]
+testtarget <- air[ind==2, 11]
 
 # Normalize
 m <- colMeans(training)
@@ -49,10 +49,9 @@ test <- scale(test, center = m, scale = s)
 # Create Model
 model <- keras_model_sequential()
 model %>% 
-  layer_dense(units = 5, activation = 'relu', input_shape = c(5)) %>%
+  layer_dense(units = 5, activation = 'relu', input_shape = c(10)) %>%
   layer_dense(units = 1,)
 
-install_tensorflow()
 # Compile
 model %>% compile(loss = 'mse',
                   optimizer = 'rmsprop',
@@ -75,7 +74,7 @@ plot(testtarget, pred)
 # finemodel
 model <- keras_model_sequential()
 model %>% 
-  layer_dense(units = 10, activation = 'relu', input_shape = c(9)) %>%
+  layer_dense(units = 10, activation = 'relu', input_shape = c(10)) %>%
   layer_dense(units = 5, activation = 'relu') %>%
   layer_dense(units = 1,)
 
@@ -124,7 +123,7 @@ model %>% compile(loss = 'mse',
 mymodel <- model %>%
   fit(training,
       trainingtarget,
-      epochs = 150,
+      epochs = 100,
       batch_size = 35,
       validation_split = 0.2)
 
