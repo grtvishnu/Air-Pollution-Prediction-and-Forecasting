@@ -1,29 +1,34 @@
 library(randomForest)
 library(caret)
+library(Metrics)
 
-
+#load data
 air <- read.csv(file = "orginal.csv")
 str(air)
 
+#split data
 set.seed(1234)
 ind <- sample(2, nrow(air), replace = T, prob = c(.7, .3))
 training <- air[ind==1, ]
 test <- air[ind==2, ]
-
+#create model
 set.seed(222)
 rf <- randomForest(PM25~., data = training,
-                   ntree = 300,
-                   importance = T,
-                   proximity = T)
+                   mtry =12,
+                   ntree = 300)
+#print model
 print(rf)
 attributes(rf)
 
-
+#fit models
 p1 <- predict(rf, test)
+
+#test accuracy
 rmse(log(test$PM25),log(p1))
 
-pre <- Prediction_3
-act <- testing$PM25
+#accuracy table
+pre <- p1
+act <- test$PM25
 t1 <- cbind(pre,act)
 view(t1)
 

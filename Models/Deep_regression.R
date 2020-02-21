@@ -24,8 +24,8 @@ n <- neuralnet(PM25 ~ Temperature+Humidity+Wind.Speed..km.h.+Visibility+Pressure
 plot(n,
      col.hidden = 'darkgreen',
      col.hidden.synapse = 'darkgreen',
-     show.weights = T,
-     information = T,
+     show.weights = F,
+     information = F,
      fill = 'lightblue')
 
 # Matrix
@@ -107,11 +107,11 @@ plot(testtarget, pred)
 
 model <- keras_model_sequential()
 model %>% 
-  layer_dense(units = 1000, activation = 'tanh', input_shape = c(9)) %>%
+  layer_dense(units = 1000, activation = 'relu', input_shape = c(10)) %>%
   layer_dropout(rate = 0.03) %>%
-  layer_dense(units = 500, activation = 'tanh') %>%
+  layer_dense(units = 500, activation = 'relu') %>%
   layer_dropout(rate = 0.02) %>%
-  layer_dense(units = 200, activation = 'tanh') %>%
+  layer_dense(units = 200, activation = 'relu') %>%
   layer_dropout(rate = 0.01) %>%
   layer_dense(units = 1,)
 summary(model)
