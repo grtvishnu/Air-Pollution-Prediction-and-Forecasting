@@ -43,21 +43,23 @@ params <- list(iterations=1000,
 
 model <- catboost.train(learn_pool = train_pool,params = params)
 
-catboost.get_model_params(model)
+#catboost.get_model_params(model)
 
 #predict
 y_pred=catboost.predict(model,test_pool)
 postResample(y_pred,test$PM25)
 
-saveRDS(model, "catboost_model_chennai.RDS")
+#saveRDS(model, "catboost_model_chennai.RDS")
 
 
 
 #feature importence
 
-catboost.get_feature_importance(model, 
+importance <- catboost.get_feature_importance(model, 
                                 pool = NULL, 
                                 type = 'FeatureImportance',
                                 thread_count = 6)
 
+importance <- varImp(model, scale = FALSE)
+print(importance)
 
