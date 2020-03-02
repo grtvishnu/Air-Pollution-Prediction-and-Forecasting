@@ -13,7 +13,7 @@ training <- air[ind==1, ]
 test <- air[ind==2, ]
 #create model
 set.seed(222)
-rf <- randomForest(AQI~., data = training,
+rf <- randomForest(PM25~., data = training,
                    mtry =10,
                    ntree = 500,
                    proximity=F)
@@ -26,7 +26,6 @@ p1 <- predict(rf, test)
 
 #test accuracy
 rmse(log(test$AQI),log(p1))
-
 #accuracy table
 pre <- p1
 act <- test$PM25

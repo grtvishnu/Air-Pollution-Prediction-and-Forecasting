@@ -6,7 +6,7 @@ library(catboost)
 library(caret)
 library(dplyr)
 library(plotly)
-air <- read.csv(file = "orginal.csv")
+air <- read.csv(file = "orginal_1.csv")
 # air <- air[,2:11]
 str(air)
 # air$PM25 <- as.numeric(air$PM25)
@@ -27,7 +27,7 @@ train_pool <- catboost.load_pool(data = X_train, label = y_train)
 test_pool <- catboost.load_pool(data = X_valid, label = y_valid)
 
 
-params <- list(iterations=1000,
+params <- list(iterations=1500,
                learning_rate=0.01,
                depth=10,
                loss_function='RMSE',
@@ -49,15 +49,19 @@ catboost.get_model_params(model)
 y_pred=catboost.predict(model,test_pool)
 postResample(y_pred,test$PM25)
 
-saveRDS(model, "catboost_model_chennai.RDS")
+rmse(log(test$PM25),log(y_pred))
+RMSE(y_pred, test$PM25, na.rm = T)
+#saveRDS(model, "catboost_model_chennai.RDS")
 
 
 
 #feature importence
 
-catboost.get_feature_importance(model, 
+importance <- catboost.get_feature_importance(model, 
                                 pool = NULL, 
                                 type = 'FeatureImportance',
                                 thread_count = 6)
 
+importance <- varImp(model, scale = FALSE)
+print(importance)
 
