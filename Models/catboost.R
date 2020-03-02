@@ -6,7 +6,7 @@ library(catboost)
 library(caret)
 library(dplyr)
 library(plotly)
-air <- read.csv(file = "orginal.csv")
+air <- read.csv(file = "orginal_1.csv")
 # air <- air[,2:11]
 str(air)
 # air$PM25 <- as.numeric(air$PM25)
@@ -27,7 +27,7 @@ train_pool <- catboost.load_pool(data = X_train, label = y_train)
 test_pool <- catboost.load_pool(data = X_valid, label = y_valid)
 
 
-params <- list(iterations=1000,
+params <- list(iterations=1500,
                learning_rate=0.01,
                depth=10,
                loss_function='RMSE',
@@ -43,12 +43,14 @@ params <- list(iterations=1000,
 
 model <- catboost.train(learn_pool = train_pool,params = params)
 
-#catboost.get_model_params(model)
+catboost.get_model_params(model)
 
 #predict
 y_pred=catboost.predict(model,test_pool)
 postResample(y_pred,test$PM25)
 
+rmse(log(test$PM25),log(y_pred))
+RMSE(y_pred, test$PM25, na.rm = T)
 #saveRDS(model, "catboost_model_chennai.RDS")
 
 

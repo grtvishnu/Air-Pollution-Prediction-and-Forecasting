@@ -7,15 +7,13 @@ library(neuralnet)
 library(tensorflow)
 
 # Data
-air <- read.csv(file = "orginal.csv")
+air <- read.csv(file = "orginal_1.csv")
 #air <- air[,5:10]
 air$PM25 <- as.numeric(air$PM25)
 str(air)
 
-data %<>% mutate_if(is.factor, as.numeric)
-
 # Neural Network Visualization
-n <- neuralnet(AQI ~ Temperature+Humidity+Wind.Speed..km.h.+Visibility+Pressure+so2+no2+Rainfall+PM10+PM25,
+n <- neuralnet(PM25 ~ Temperature+Humidity+Wind.Speed..km.h.+Visibility+Pressure+so2+no2+Rainfall+PM10+AQI,
                data = air,
                hidden = c(10,5),
                linear.output = F,
@@ -56,6 +54,8 @@ model %>%
 model %>% compile(loss = 'mse',
                   optimizer = 'rmsprop',
                   metrics = 'mae')
+
+model
 # Fit Model
 mymodel <- model %>%
   fit(training,
@@ -63,6 +63,7 @@ mymodel <- model %>%
       epochs = 100,
       batch_size = 32,
       validation_split = 0.2)
+
 
 # Evaluate
 model %>% evaluate(test, testtarget)
@@ -94,11 +95,13 @@ mymodel <- model %>%
 # Evaluate
 model %>% evaluate(test, testtarget)
 pred <- model %>% predict(test)
-model %>% predict_classes(test)
+
 
 model %>% summary(test)
 
 mean((testtarget-pred)^2)
+RMSE(pred, testtarget, na.rm = T)
+rmse(log(testtarget),log(pred))
 plot(testtarget, pred)
 
 

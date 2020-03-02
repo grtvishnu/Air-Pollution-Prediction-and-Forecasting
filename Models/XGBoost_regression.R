@@ -16,7 +16,7 @@ library(lubridate)
 library(scales)
 #install.packages("mlr")
 
-air <- read.csv(file = "orginal.csv")
+air <- read.csv(file = "orginal_1.csv")
 #air <- air[,2:11]
 str(air)
 summary(air)
@@ -44,6 +44,7 @@ set.seed(1234)
 ind <- sample(2, nrow(air), replace = T, prob = c(.7, .3))
 train <- air[ind==1,1:10]
 test <- air[ind==2, 1:10]
+
 t_train <- setDT(train) 
 t_test <- setDT(test)
 labels <- air[ind==1, 11]
@@ -70,6 +71,9 @@ pred <- predict(xgbFit, dtest)
 print(length(pred))
 print(head(pred))
 
+rmse(log(testtarget),log(pred))
+RMSE(pred, ts_labels, na.rm = T)
+pred
 importance_matrix <- xgb.importance(model = xgbFit)
 print(importance_matrix)
 xgb.plot.importance(importance_matrix = importance_matrix)
