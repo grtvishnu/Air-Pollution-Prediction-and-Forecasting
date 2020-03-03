@@ -16,7 +16,7 @@ library(lubridate)
 library(scales)
 #install.packages("mlr")
 
-air <- read.csv(file = "orginal.csv")
+air <- read.csv(file = "orginal_1.csv")
 #air <- air[,2:11]
 str(air)
 summary(air)

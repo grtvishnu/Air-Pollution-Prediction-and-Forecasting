@@ -9,7 +9,7 @@ library(tensorflow)
 # Data
 air <- read.csv(file = "orginal_1.csv")
 #air <- air[,5:10]
-air$PM25 <- as.numeric(air$PM25)
+#air$PM25 <- as.numeric(air$PM25)
 str(air)
 
 # Neural Network Visualization

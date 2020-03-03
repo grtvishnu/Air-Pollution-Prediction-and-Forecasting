@@ -18,6 +18,7 @@ rf <- randomForest(PM25~., data = training,
                    ntree = 500,
                    proximity=F)
 #print model
+summary(rf)
 print(rf)
 attributes(rf)
 

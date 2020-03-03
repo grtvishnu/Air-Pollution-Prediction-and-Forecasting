@@ -49,7 +49,6 @@ catboost.get_model_params(model)
 y_pred=catboost.predict(model,test_pool)
 postResample(y_pred,test$PM25)
 
-rmse(log(test$PM25),log(y_pred))
 RMSE(y_pred, test$PM25, na.rm = T)
 #saveRDS(model, "catboost_model_chennai.RDS")
 
