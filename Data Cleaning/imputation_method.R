@@ -47,10 +47,10 @@ impute$imp$AQI
 
 
 #complete data
-newdata <- complete(impute, 2 )
+c1 <- complete(impute, 3 )
 
 # Distribution of observed/imputed values
 stripplot(impute, pch = 20, cex = 1.2)
 xyplot(impute, so2 ~ no2 | .imp, pch = 20, cex = 1.4)
-write.csv(newdata, "new_c5.csv")
+write.csv(c1, "nomissing.csv")
 

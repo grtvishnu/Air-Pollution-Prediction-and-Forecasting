@@ -15,7 +15,7 @@ c1$AQI<- replace(c1$AQI, c1$AQI <=0, NA )
 
 c1$PM25<- replace(c1$PM25, c1$PM25 >=1000, NA )
 c1$PM10<- replace(c1$PM10, c1$PM10 >=1000, NA )
-c1$AQI<- replace(c1$AQI, c1$AQI  >=1000, NA )
+c1$AQI<- replace(c1$AQI, c1$AQI  >=250, NA )
 
 
 summary(c1)
