@@ -36,7 +36,7 @@ marginplot(c1[,c('PM25', 'PM10')])
 
 #impute
 
-
+summary(c1)
 impute <- mice(c1, m=3, seed = 123)
 print(impute)  #predictive mean matching (pmm)  polyreg(multi nominal logistic regression)
 
@@ -45,12 +45,11 @@ impute$imp$PM10
 impute$imp$AQI
 
 
-
 #complete data
-c1 <- complete(impute, 3 )
+c1 <- complete(impute, 2 )
 
 # Distribution of observed/imputed values
 stripplot(impute, pch = 20, cex = 1.2)
 xyplot(impute, so2 ~ no2 | .imp, pch = 20, cex = 1.4)
-write.csv(c1, "nomissing.csv")
+write.csv(c1, "nomissing_mu.csv")
 
