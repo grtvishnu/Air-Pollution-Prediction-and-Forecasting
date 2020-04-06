@@ -1,0 +1,406 @@
+---
+title: "Air Quality Prediction and Forecasting"
+author: "Great_vishnu"
+date: "4/4/2020"
+output: html_document
+---
+## Cleaning The data
+
+```{r}
+setwd("~/Users/optra/Documents/GitHub/PM25/Data")
+air <- read_csv("data.csv")
+str(air)
+```
+
+```{r}
+library(tidyverse)
+library(mice)
+library(VIM)
+library(Hmisc)
+library(PerformanceAnalytics)
+library(corrplot)
+library(ccgarch)
+```
+#replace 0 and -999 to NA
+```{r}
+air$PM25 <- replace(air$PM25, air$PM25 <= 0, NA)
+air$PM10 <- replace(air$PM10, air$PM10 <= 0, NA)
+air$AQI <- replace(air$AQI, air$AQI <= 0, NA)
+
+air$PM25 <- replace(air$PM25, air$PM25 >= 1000, NA)
+air$PM10 <- replace(air$PM10, air$PM10 >= 1000, NA)
+air$AQI <- replace(air$AQI, air$AQI >= 700, NA)
+```
+Count the number of the NA values
+```{r}
+Num_NA <- sapply(air, function(y) length(which(is.na(y) == T)))
+NA_Count <- data.frame(Item = colnames(air), Count = Num_NA)
+NA_Count
+```
+Cleaning
+```{r}
+impute <- mice(air, m = 5, seed = 123)
+print(impute) # predictive mean matching (pmm)  polyreg(multi nominal logistic regression)
+
+impute$imp$PM25
+impute$imp$PM10
+impute$imp$AQI
+impute$imp$Temperature
+impute$imp$Rainfall
+impute$imp$no2
+impute$imp$Wind.Speed..km.h.
+impute$imp$Pressure
+
+cleaned_air <- complete(impute, 2) # 1 2 3 4 5
+
+# Distribution of observed/imputed values
+stripplot(impute, pch = 20, cex = 1.2)
+xyplot(impute, so2 ~ no2 | .imp, pch = 20, cex = 1.4)
+```
+#Correlation
+```{r}
+
+A <- cor.test(air$PM25, air$Wind.Speed..km.h., method = "pearson")
+A
+B <- cor.test(air$PM25, air$Pressure, method = "pearson")
+B
+C <- cor.test(air$PM25, air$no2, method = "pearson")
+C
+D <- cor.test(air$PM25, air$Rainfall, method = "pearson")
+D
+E <- cor.test(air$PM25, air$PM10, method = "pearson")
+E
+G <- cor.test(air$PM25, air$AQI, method = "pearson")
+G
+H <- cor.test(air$PM25, air$Temperature, method = "pearson")
+H
+
+Ai <- cor.test(air$AQI, air$Wind.Speed..km.h., method = "pearson")
+Ai
+Bi <- cor.test(air$AQI, air$Pressure, method = "pearson")
+Bi
+Ci <- cor.test(air$AQI, air$no2, method = "pearson")
+Ci
+Di <- cor.test(air$AQI, air$Rainfall, method = "pearson")
+Di
+Ei <- cor.test(air$AQI, air$PM10, method = "pearson")
+Ei
+Gi <- cor.test(air$AQI, air$PM25, method = "pearson")
+Gi
+Hi <- cor.test(air$AQI, air$Temperature, method = "pearson")
+Hi
+
+res <- cor(air)
+res
+
+res2 <- rcorr(as.matrix(air))
+res2
+
+chart.Correlation(air, histogram = T, pch = 19)
+
+corrplot(res, method="circle")
+corrplot(res, method="pie")
+corrplot(res, method="color")
+corrplot(res, method="number")
+corrplot(res, type="upper")
+corrplot(res, type="upper", order="hclust")
+
+palette = colorRampPalette(c("green", "white", "red")) (20)
+heatmap(x = res, col = palette, symm = TRUE)
+```
+Normalization
+```{r}
+m <- colMeans(air)
+s <- apply(air, 2, sd)
+z_air <- scale(air, center = m, scale = s)
+
+z_air <- as.tibble(z_air)
+
+head(z_air)
+
+```
+
+## DEEP LEARNING
+
+Libraries
+```{r}
+library(keras)
+library(mlbench) 
+library(dplyr)
+library(magrittr)
+library(neuralnet)
+library(tensorflow)
+```
+
+Visualizing the Neuralnetwork
+```{r}
+n <- neuralnet(PM25 ~ Temperature+Humidity+Wind.Speed..km.h.+Visibility+Pressure+so2+no2+Rainfall+PM10+AQI,
+               data = air,
+               hidden = c(10,5),
+               linear.output = F,
+               lifesign = 'full',
+               rep=1,)
+
+```
+```{r}
+plot(n,
+     col.hidden = 'darkgreen',
+     col.hidden.synapse = 'darkgreen',
+     show.weights = F,
+     information = F,
+     fill = 'lightblue')
+```
+Change it to matrix
+```{r}
+air <- as.matrix(air)
+dimnames(air) <- NULL
+```
+
+Train Test Split 
+```{r}
+set.seed(1234)
+ind <- sample(2, nrow(air), replace = T, prob = c(.7, .3))
+training <- air[ind==1,1:10]
+test <- air[ind==2, 1:10]
+trainingtarget <- air[ind==1, 11]
+testtarget <- air[ind==2, 11]
+```
+Normalize
+```{r}
+m <- colMeans(training)
+s <- apply(training, 2, sd)
+training <- scale(training, center = m, scale = s)
+test <- scale(test, center = m, scale = s)
+```
+
+Model
+```{r}
+model <- keras_model_sequential()
+model %>% 
+  layer_dense(units = 10, activation = 'relu', input_shape = c(10)) %>%
+  layer_dense(units = 5, activation = 'relu') %>%
+  layer_dense(units = 1,)
+```
+Compile Model
+```{r}
+model %>% compile(loss = 'mse',
+                  optimizer = 'rmsprop',
+                  metrics = 'mae')
+```
+Fit Model
+```{r}
+mymodel <- model %>%
+  fit(training,
+      trainingtarget,
+      epochs = 100,
+      batch_size = 32,
+      validation_split = 0.2)
+```
+Evaluate
+```{r}
+model %>% evaluate(test, testtarget)
+pred <- model %>% predict(test)
+```
+Model Summary
+```{r}
+
+model %>% summary(test)
+```
+Test Error
+```{r}
+mean((testtarget-pred)^2)
+```
+
+## XGBoost
+
+
+
+```{r}
+library(MASS) 
+library(Metrics)
+library(corrplot)
+library(randomForest)
+library(lars)
+library(ggplot2)
+library(xgboost)
+library(Matrix)
+library(methods)
+library(caret)
+library(tidyverse)
+library(mlr)
+library(data.table)
+library(caret)
+library(lubridate)
+library(scales)
+```
+
+```{r}
+set.seed(1234)
+ind <- sample(2, nrow(air), replace = T, prob = c(.7, .3))
+train <- air[ind==1,1:10]
+test <- air[ind==2, 1:10]
+```
+
+```{r}
+t_train <- setDT(train) 
+t_test <- setDT(test)
+labels <- air[ind==1, 11]
+ts_labels  <- air[ind==2, 11]
+```
+
+```{r}
+dtrain <- xgb.DMatrix(label = labels, data = as.matrix(train))
+dtest <- xgb.DMatrix(label =ts_labels, data = as.matrix(test))
+set.seed(123)
+xgbFit=xgboost(data= dtrain,
+               nfold=5,label=labels,
+               nrounds=2200,verbose=T,objective='reg:linear',
+               eval_metric='rmse',nthread=8,eta=0.01,gamma=0.0468,
+               max_depth=6,min_child_weight=1.7817,
+               subsample=0.5213,
+               colsample_bytree=0.4603)
+```
+
+```{r}
+print(xgbFit)
+```
+
+```{r}
+pred <- predict(xgbFit, dtest)
+print(length(pred))
+```
+
+
+```{r}
+print(head(pred))
+```
+
+```{r}
+RMSE(pred, ts_labels, na.rm = T)
+```
+
+```{r}
+importance_matrix <- xgb.importance(model = xgbFit)
+print(importance_matrix)
+xgb.plot.importance(importance_matrix = importance_matrix)
+preds2 <- exp(predict(xgbFit,newdata=dtest)) - 1
+```
+
+## CATBoost
+
+
+
+```{r}
+library(catboost)
+library(caret)
+library(dplyr)
+library(plotly)
+```
+```{r}
+set.seed(1234)
+ind <- sample(2, nrow(air), replace = T, prob = c(0.8, 0.2))
+train <- air[ind==1,]
+test <- air[ind==2,]
+
+```
+
+```{r}
+y_train <- unlist(train[c('PM25')])
+X_train <- train %>% select(-PM25)
+y_valid <- unlist(test[c('PM25')])
+X_valid <- test %>% select(-PM25)
+```
+
+```{r}
+train_pool <- catboost.load_pool(data = X_train, label = y_train)
+test_pool <- catboost.load_pool(data = X_valid, label = y_valid)
+```
+
+```{r}
+params <- list(iterations=1500,
+               learning_rate=0.01,
+               depth=10,
+               loss_function='RMSE',
+               eval_metric='RMSE',
+               random_seed = 55,
+               od_type='Iter',
+               metric_period = 1,
+               od_wait=20,
+               use_best_model=TRUE)
+
+```
+
+```{r}
+model <- catboost.train(learn_pool = train_pool,params = params)
+```
+```{r}
+catboost.get_model_params(model)
+#save(model, file = "catboot.rda")
+#predict
+y_pred=catboost.predict(model,test_pool)
+postResample(y_pred,test$PM25)
+```
+
+```{r}
+importance <- catboost.get_feature_importance(model, 
+                                pool = NULL, 
+                                type = 'FeatureImportance',
+                                thread_count = 6)
+
+
+```
+
+```{r}
+print(importance)
+```
+
+```{r}
+plot(importance)
+```
+
+## Random Forest
+
+```{r}
+library(randomForest)
+library(caret)
+library(Metrics)
+
+```
+
+```{r}
+set.seed(1234)
+ind <- sample(2, nrow(air), replace = T, prob = c(.7, .3))
+training <- air[ind==1, ]
+test <- air[ind==2, ]
+```
+
+```{r}
+set.seed(222)
+rf <- randomForest(PM25 ~ Temperature+Wind.Speed..km.h.+Pressure+no2+Rainfall+PM10+AQI, data = training,
+                   mtry =10,
+                   ntree = 500,
+                   proximity=F)
+```
+
+```{r}
+summary(rf)
+print(rf)
+```
+
+```{r}
+p1 <- predict(rf, test)
+RMSE(p1, test$PM25)
+```
+
+```{r}
+pre <- p1
+act <- test$PM25
+t1 <- cbind(pre,act)
+head(t1)
+
+```
+
+```{r}
+plot(rf, log="y")
+```
+

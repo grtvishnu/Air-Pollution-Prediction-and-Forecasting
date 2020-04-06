@@ -1,0 +1,63 @@
+---
+title: "Random_forest"
+author: "Great_vishnu"
+date: "3/25/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Random Forest
+
+```{r}
+library(randomForest)
+library(caret)
+library(Metrics)
+
+```
+
+```{r}
+setwd("~/GitHub/PM25/Data")
+air <- read.csv("orginal.csv")
+str(air)
+```
+
+```{r}
+set.seed(1234)
+ind <- sample(2, nrow(air), replace = T, prob = c(.7, .3))
+training <- air[ind==1, ]
+test <- air[ind==2, ]
+```
+
+```{r}
+set.seed(222)
+rf <- randomForest(PM25 ~ Temperature+Wind.Speed..km.h.+Pressure+no2+Rainfall+PM10+AQI, data = training,
+                   mtry =10,
+                   ntree = 500,
+                   proximity=F)
+```
+
+```{r}
+summary(rf)
+print(rf)
+```
+
+```{r}
+p1 <- predict(rf, test)
+RMSE(p1, test$PM25)
+```
+
+```{r}
+pre <- p1
+act <- test$PM25
+t1 <- cbind(pre,act)
+head(t1)
+
+```
+
+```{r}
+plot(rf, log="y")
+```
+

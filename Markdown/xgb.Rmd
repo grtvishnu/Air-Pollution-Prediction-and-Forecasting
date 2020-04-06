@@ -1,0 +1,83 @@
+---
+title: "XGboost"
+author: "Great_vishnu"
+date: "3/27/2020"
+output: html_document
+---
+```{r}
+library(MASS) 
+library(Metrics)
+library(corrplot)
+library(randomForest)
+library(lars)
+library(ggplot2)
+library(xgboost)
+library(Matrix)
+library(methods)
+library(caret)
+library(tidyverse)
+library(mlr)
+library(data.table)
+library(caret)
+library(lubridate)
+library(scales)
+```
+
+```{r}
+setwd("~/GitHub/PM25/Data")
+air <- read.csv("orginal.csv")
+str(air)
+```
+
+```{r}
+set.seed(1234)
+ind <- sample(2, nrow(air), replace = T, prob = c(.7, .3))
+train <- air[ind==1,1:10]
+test <- air[ind==2, 1:10]
+```
+
+```{r}
+t_train <- setDT(train) 
+t_test <- setDT(test)
+labels <- air[ind==1, 11]
+ts_labels  <- air[ind==2, 11]
+```
+
+```{r}
+dtrain <- xgb.DMatrix(label = labels, data = as.matrix(train))
+dtest <- xgb.DMatrix(label =ts_labels, data = as.matrix(test))
+set.seed(123)
+xgbFit=xgboost(data= dtrain,
+               nfold=5,label=labels,
+               nrounds=2200,verbose=T,objective='reg:linear',
+               eval_metric='rmse',nthread=8,eta=0.01,gamma=0.0468,
+               max_depth=6,min_child_weight=1.7817,
+               subsample=0.5213,
+               colsample_bytree=0.4603)
+```
+
+```{r}
+print(xgbFit)
+```
+
+```{r}
+pred <- predict(xgbFit, dtest)
+print(length(pred))
+```
+
+
+```{r}
+print(head(pred))
+```
+
+```{r}
+RMSE(pred, ts_labels, na.rm = T)
+```
+
+```{r}
+importance_matrix <- xgb.importance(model = xgbFit)
+print(importance_matrix)
+xgb.plot.importance(importance_matrix = importance_matrix)
+preds2 <- exp(predict(xgbFit,newdata=dtest)) - 1
+```
+

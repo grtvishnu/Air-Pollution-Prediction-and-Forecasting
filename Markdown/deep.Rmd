@@ -1,0 +1,104 @@
+---
+title: "Deep Learning"
+author: "Great_vishnu"
+date: "3/24/2020"
+output: 
+  html_document: 
+    fig_caption: yes
+---
+
+
+Libraries
+```{r}
+library(keras)
+library(mlbench) 
+library(dplyr)
+library(magrittr)
+library(neuralnet)
+library(tensorflow)
+```
+
+```{r}
+setwd("~/GitHub/PM25/Data")
+air <- read.csv("orginal.csv")
+str(air)
+```
+Visualizing the Neuralnetwork
+```{r}
+n <- neuralnet(PM25 ~ Temperature+Humidity+Wind.Speed..km.h.+Visibility+Pressure+so2+no2+Rainfall+PM10+AQI,
+               data = air,
+               hidden = c(10,5),
+               linear.output = F,
+               lifesign = 'full',
+               rep=1,)
+
+```
+```{r}
+plot(n,
+     col.hidden = 'darkgreen',
+     col.hidden.synapse = 'darkgreen',
+     show.weights = F,
+     information = F,
+     fill = 'lightblue')
+```
+Change it to matrix
+```{r}
+air <- as.matrix(air)
+dimnames(air) <- NULL
+```
+
+Train Test Split 
+```{r}
+set.seed(1234)
+ind <- sample(2, nrow(air), replace = T, prob = c(.7, .3))
+training <- air[ind==1,1:10]
+test <- air[ind==2, 1:10]
+trainingtarget <- air[ind==1, 11]
+testtarget <- air[ind==2, 11]
+```
+Normalize
+```{r}
+m <- colMeans(training)
+s <- apply(training, 2, sd)
+training <- scale(training, center = m, scale = s)
+test <- scale(test, center = m, scale = s)
+```
+
+Model
+```{r}
+model <- keras_model_sequential()
+model %>% 
+  layer_dense(units = 10, activation = 'relu', input_shape = c(10)) %>%
+  layer_dense(units = 5, activation = 'relu') %>%
+  layer_dense(units = 1,)
+```
+Compile Model
+```{r}
+model %>% compile(loss = 'mse',
+                  optimizer = 'rmsprop',
+                  metrics = 'mae')
+```
+Fit Model
+```{r}
+mymodel <- model %>%
+  fit(training,
+      trainingtarget,
+      epochs = 100,
+      batch_size = 32,
+      validation_split = 0.2)
+```
+Evaluate
+```{r}
+model %>% evaluate(test, testtarget)
+pred <- model %>% predict(test)
+```
+Model Summary
+```{r}
+
+model %>% summary(test)
+```
+Test Error
+```{r}
+mean((testtarget-pred)^2)
+```
+![Error](~/GitHub/PM25/Data/Rplot.jpeg)
