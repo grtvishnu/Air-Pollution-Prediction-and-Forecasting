@@ -15,7 +15,7 @@ test <- air[ind == 2, ]
 set.seed(222)
 rf <- randomForest(PM25 ~ Temperature + Wind.Speed..km.h. + Pressure + no2 + Rainfall + PM10 + AQI,
                    data = training,
-                   mtry = 10,
+                   mtry = 3,
                    ntree = 500,
                    proximity = F
 )
@@ -91,3 +91,8 @@ varImpPlot(rf,
            n.var = 10,
            main = "Top 10"
 )
+
+# Transfer Learning
+
+saveRDS(rf, file = "random_forest.rds")
+rf<-readRDS("random_forest.rds")
