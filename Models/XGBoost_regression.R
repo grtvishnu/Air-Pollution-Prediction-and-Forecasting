@@ -68,6 +68,7 @@ xgbFit <- xgboost(
   subsample = 0.5213,
   colsample_bytree = 0.4603
 )
+saveRDS(xgbFit,"xgb.rds")
 print(xgbFit)
 
 # save(xgbFit, file = "xgboost.rda")
@@ -77,7 +78,7 @@ print(head(pred))
 
 rmse(log(testtarget), log(pred))
 RMSE(pred, ts_labels, na.rm = T)
-pred
+  pred
 importance_matrix <- xgb.importance(model = xgbFit)
 print(importance_matrix)
 xgb.plot.importance(importance_matrix = importance_matrix)

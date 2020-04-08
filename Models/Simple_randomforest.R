@@ -1,6 +1,7 @@
 library(randomForest)
 library(caret)
 library(Metrics)
+library(tidyverse)
 
 # load data
 air <- read.csv(file = "orginal.csv")
@@ -19,6 +20,7 @@ rf <- randomForest(PM25 ~ Temperature + Wind.Speed..km.h. + Pressure + no2 + Rai
                    ntree = 500,
                    proximity = F
 )
+
 # print model
 summary(rf)
 print(rf)
