@@ -5,7 +5,7 @@ library(dplyr)
 library(magrittr)
 library(neuralnet)
 library(tensorflow)
-
+library(reticulate)
 # Data
 air <- read.csv(file = "orginal.csv")
 # air <- air[,5:10]
@@ -115,7 +115,7 @@ plot(testtarget, pred)
 
 model <- keras_model_sequential()
 model %>%
-  layer_dense(units = 100, activation = "relu", input_shape = c(7)) %>%
+  layer_dense(units = 100, activation = "relu", input_shape = c(10)) %>%
   layer_dropout(rate = 0.03) %>%
   layer_dense(units = 50, activation = "relu") %>%
   layer_dropout(rate = 0.02) %>%
@@ -142,14 +142,6 @@ mymodel <- model %>%
 # Evaluate
 model %>% evaluate(test, testtarget)
 pred <- model %>% predict(test)
-plot(testtarget, pred)
-# model %>% predict_classes(test)
-
-model %>% summary(test)
-
 mean((testtarget - pred)^2)
 plot(testtarget, pred)
 plot(mymodel)
-
-
-# saveRDS(mymodel, "deepMPL1.RDS")
