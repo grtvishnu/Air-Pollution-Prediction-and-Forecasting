@@ -3,6 +3,7 @@ library(prophet)
 library(tidyverse)
 library(tidyquant)
 library(cowplot)
+library(MLmetrics)
 
 #read and remove columns from file
 c1 <- read_csv("org_ch.csv")
@@ -74,4 +75,4 @@ prophet_plot_components(m, forecast)
 
 # calculate accuracy(0.4495045)
 
-RMSE(forecast$yhat, y, na.rm = T)
+RMSE(forecast$yhat, y)
