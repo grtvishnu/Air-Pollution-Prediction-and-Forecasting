@@ -14,6 +14,7 @@ library(data.table)
 library(caret)
 library(lubridate)
 library(scales)
+library(MLmetrics)
 # install.packages("mlr")
 
 air <- read.csv(file = "data.csv")
@@ -76,7 +77,6 @@ pred <- predict(xgbFit, dtest)
 print(length(pred))
 print(head(pred))
 
-rmse(log(testtarget), log(pred))
 RMSE(pred, ts_labels, na.rm = T)
   pred
 importance_matrix <- xgb.importance(model = xgbFit)

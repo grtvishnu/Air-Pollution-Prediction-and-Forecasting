@@ -7,13 +7,13 @@ library(neuralnet)
 library(tensorflow)
 library(reticulate)
 # Data
-air <- read.csv(file = "orginal.csv")
+air <- read.csv(file = "data.csv")
 # air <- air[,5:10]
 # air$PM25 <- as.numeric(air$PM25)
 str(air)
 
 # Neural Network Visualization
-n <- neuralnet(PM25 ~ Temperature + Humidity + Wind.Speed..km.h. + Visibility + Pressure + so2 + no2 + Rainfall + PM10 + AQI,
+n <- neuralnet(PM25 ~ Temperature+ Wind.Speed..km.h.+ Pressure+ no2 + Rainfall + PM10 + AQI,
                data = air,
                hidden = c(10, 5),
                linear.output = F,
@@ -35,10 +35,10 @@ dimnames(air) <- NULL
 # Partition
 set.seed(1234)
 ind <- sample(2, nrow(air), replace = T, prob = c(.7, .3))
-training <- air[ind == 1, 1:10]
-test <- air[ind == 2, 1:10]
-trainingtarget <- air[ind == 1, 11]
-testtarget <- air[ind == 2, 11]
+training <- air[ind == 1, 1:7]
+test <- air[ind == 2, 1:7]
+trainingtarget <- air[ind == 1, 8]
+testtarget <- air[ind == 2, 8]
 
 # Normalize
 m <- colMeans(training)
@@ -49,7 +49,7 @@ test <- scale(test, center = m, scale = s)
 # Create Model
 model <- keras_model_sequential()
 model %>%
-  layer_dense(units = 5, activation = "relu", input_shape = c(10)) %>%
+  layer_dense(units = 5, activation = "relu", input_shape = c(7)) %>%
   layer_dense(units = 1, )
 
 # Compile
@@ -80,7 +80,7 @@ plot(mymodel)
 # finemodel
 model <- keras_model_sequential()
 model %>%
-  layer_dense(units = 10, activation = "relu", input_shape = c(10)) %>%
+  layer_dense(units = 10, activation = "relu", input_shape = c(7)) %>%
   layer_dense(units = 5, activation = "relu") %>%
   layer_dense(units = 1, )
 
@@ -115,7 +115,7 @@ plot(testtarget, pred)
 
 model <- keras_model_sequential()
 model %>%
-  layer_dense(units = 100, activation = "relu", input_shape = c(10)) %>%
+  layer_dense(units = 100, activation = "relu", input_shape = c(7)) %>%
   layer_dropout(rate = 0.03) %>%
   layer_dense(units = 50, activation = "relu") %>%
   layer_dropout(rate = 0.02) %>%

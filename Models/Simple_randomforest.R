@@ -4,7 +4,7 @@ library(Metrics)
 library(tidyverse)
 
 # load data
-air <- read.csv(file = "orginal.csv")
+air <- read.csv(file = "data.csv")
 str(air)
 
 # split data
@@ -14,7 +14,7 @@ training <- air[ind == 1, ]
 test <- air[ind == 2, ]
 # create model
 set.seed(222)
-rf <- randomForest(PM25 ~ Temperature + Wind.Speed..km.h. + Pressure + no2 + Rainfall + PM10 + AQI,
+rf <- randomForest(PM25 ~ .,
                    data = training,
                    mtry = 3,
                    ntree = 500,
