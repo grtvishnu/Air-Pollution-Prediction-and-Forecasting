@@ -6,7 +6,8 @@ library(catboost)
 library(caret)
 library(dplyr)
 library(plotly)
-air <- read.csv(file = "orginal.csv")
+library(tidyverse)
+air <- read.csv(file = "data.csv")
 # air <- air[,2:11]
 str(air)
 # air$PM25 <- as.numeric(air$PM25)
@@ -55,7 +56,7 @@ rmse(log(test$PM25), log(y_pred))
 RMSE(y_pred, test$PM25, na.rm = T)
 # saveRDS(model, "catboost_model_chennai.RDS")
 
-
+plot(model)
 
 
 # feature importence
@@ -67,3 +68,23 @@ importance <- catboost.get_feature_importance(model,
 )
 
 print(importance)
+
+atta <- c("Temperature", "Windspeed", "Pressure", "NO2", "Rainfall", "PM10", "AQI")
+impo<-cbind(atta, importance)
+impo <- as.tibble(impo)
+impo$V2 <- as.numeric(impo$V2)
+impo
+
+impo <- impo %>% 
+  arrange(desc(V2))
+impo
+
+g <- ggplot(impo, aes(x = reorder(atta, V2), y = V2))+
+  geom_bar(stat="identity")+
+  coord_flip()+
+  xlab("Variables")+
+  ylab("Importance")
+  
+ggplotly(g)
+
+
