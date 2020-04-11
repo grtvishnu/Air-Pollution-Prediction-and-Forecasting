@@ -41,7 +41,7 @@ p2 <- df %>%
     caption = "datasets::AirQuality.AQI"
   )
 p_title <- ggdraw() + 
-  draw_label("AQI", size = 18, fontface = "bold", colour = palette_light()[[1]])
+  draw_label("AQI Kolkata", size = 18, fontface = "bold", colour = palette_light()[[1]])
 
 plot_grid(p_title, p1, p2, ncol = 1, rel_heights = c(0.1, 1, 1))
 
