@@ -1,5 +1,7 @@
 library(tidyverse)
 library(hrbrthemes)
+
+# Histogram
 ggplot(data = air, aes(x= Temperature))+
   geom_histogram()
 
@@ -23,9 +25,6 @@ ggplot(data = air, aes(x= AQI))+
 
 ggplot(data = air, aes(x= PM25))+
   geom_histogram()
-
-summary(air$Rainfall)
-
 
 hist(air$Temperature, breaks=30 , xlim=c(0,60) , col=rgb(1,0,0,0.5) , xlab="height" , ylab="nbr of plants" , main="" )
 hist(air$Wind.Speed..km.h., breaks=30 , xlim=c(0,60) , col=rgb(0,0,1,0.5) , xlab="height" , ylab="" , main="")
