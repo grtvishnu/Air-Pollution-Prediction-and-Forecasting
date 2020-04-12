@@ -6,10 +6,9 @@ library(magrittr)
 library(neuralnet)
 library(tensorflow)
 library(reticulate)
+
 # Data
 air <- read.csv(file = "data.csv")
-# air <- air[,5:10]
-# air$PM25 <- as.numeric(air$PM25)
 str(air)
 
 # Neural Network Visualization
@@ -46,7 +45,7 @@ s <- apply(training, 2, sd)
 training <- scale(training, center = m, scale = s)
 test <- scale(test, center = m, scale = s)
 
-# Create Model
+# Create Model (5 1)
 model <- keras_model_sequential()
 model %>%
   layer_dense(units = 5, activation = "relu", input_shape = c(7)) %>%
@@ -59,7 +58,6 @@ model %>% compile(
   metrics = "mae"
 )
 
-model
 # Fit Model
 mymodel <- model %>%
   fit(training,
@@ -69,15 +67,15 @@ mymodel <- model %>%
       validation_split = 0.2
   )
 
-
 # Evaluate
 model %>% evaluate(test, testtarget)
 pred <- model %>% predict(test)
 mean((testtarget - pred)^2)
 plot(testtarget, pred)
-
 plot(mymodel)
-# finemodel
+
+
+# fine model (10, 5)
 model <- keras_model_sequential()
 model %>%
   layer_dense(units = 10, activation = "relu", input_shape = c(7)) %>%
@@ -101,18 +99,13 @@ mymodel <- model %>%
   )
 
 # Evaluate
-plot(mymodel)
 model %>% evaluate(test, testtarget)
 pred <- model %>% predict(test)
-model %>% summary(test)
-
 mean((testtarget - pred)^2)
 plot(testtarget, pred)
+plot(mymodel)
 
-# save(mymodel, file = "deepneural.rda")
-
-# ultra finetuning
-
+# ultra fine model (100, 50, 20)
 model <- keras_model_sequential()
 model %>%
   layer_dense(units = 100, activation = "relu", input_shape = c(7)) %>%
@@ -122,7 +115,7 @@ model %>%
   layer_dense(units = 20, activation = "relu") %>%
   layer_dropout(rate = 0.01) %>%
   layer_dense(units = 1, )
-summary(model)
+
 # Compile
 model %>% compile(
   loss = "mse",
