@@ -114,12 +114,4 @@ final_res %>%
   collect_metrics()
 
 
-# final_res %>% 
-#   collect_predictions() %>% 
-#   mutate(correct = case_when(PM25 == ,pred_class ~ "Correct"))  %>% 
-#   bind_cols(trees_test) %>% 
-#   ggplot(aes(value, mean, color = parameter)) +
-#   geom_point(show.legend = F) +
-#   facet_wrap(~ parameter, scales = "free_x")
-
 
