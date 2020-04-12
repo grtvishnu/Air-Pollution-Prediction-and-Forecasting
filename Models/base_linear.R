@@ -2,13 +2,22 @@ library(tidyverse)
 library(psych)
 library(Hmisc)
 library(caret)
+library(MLmetrics)
 
+air <-read_csv("data.csv")
+
+set.seed(1234)
+ind <- sample(2, nrow(air), replace = T, prob = c(.7, .3))
+train <- air[ind == 1, ]
+test <- air[ind == 2, ]
+
+# Correlation
 air %>%
   cor() %>%
   round(2)
 
 cor.test(air$AQI, air$PM25)
-
+#Correlation matrix
 air %>%
   as.matrix() %>%
   rcorr()
@@ -16,32 +25,29 @@ air %>%
 air <- air %>%
   as.tibble() %>%
   print()
-
+#Scatter plot
 air %>%
   plot()
 
-air %>%
-  select(everything()) %>%
-  plot()
+# model 1
+lm(PM25 ~ AQI, data = train) %>% abline()
+fit <- lm(AQI ~PM25, data = train)
+ypred <- predict(fit, newdata = test)
+RMSE(ypred, test$AQI )
 
-lm(air$PM25 ~ air$AQI) %>% abline()
-fit <- lm(air$AQI ~ air$PM25)
 fit
-summary(fit2)
-confint(fit2)
-predict(fit2)
-
+summary(fit)
+confint(fit)
+predict(fit)
 predict(fit, interval = "prediction")
+lm.influence(fit)
+influence.measures(fit)
 
-lm.influence(fit2)
-influence.measures(fit2)
-
+#Model 2
 fit1 <- lm(PM25 ~ ., data = air)
 
 summary(fit1)
-
-fit2 <- lm(PM25 ~ Temperature + Wind.Speed..km.h. + Pressure + no2 + Rainfall + PM10 + AQI, data = air)
-ypred <- predict(fit2, newdata = test)
-summary(fit2)
-
-RMSE(ypred, test$AQI)
+confint(fit1)
+predict(fit1)
+ypred <- predict(fit1, newdata = test)
+RMSE(ypred, test$PM25)

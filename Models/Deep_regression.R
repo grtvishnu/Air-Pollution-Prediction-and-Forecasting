@@ -15,17 +15,17 @@ str(air)
 # Neural Network Visualization
 n <- neuralnet(PM25 ~ Temperature+ Wind.Speed..km.h.+ Pressure+ no2 + Rainfall + PM10 + AQI,
                data = air,
-               hidden = c(10, 5),
+               hidden = c(100, 50),
                linear.output = F,
                lifesign = "full",
                rep = 1,
 )
 plot(n,
-     col.hidden = "darkgreen",
-     col.hidden.synapse = "darkgreen",
+     col.hidden = "black",
+     col.hidden.synapse = "black",
      show.weights = F,
-     information = F,
-     fill = "lightblue"
+     information = T,
+     fill = "white"
 )
 
 # Matrix
