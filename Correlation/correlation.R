@@ -3,6 +3,8 @@ library(Hmisc)
 library(PerformanceAnalytics)
 library(corrplot)
 library(ccgarch)
+
+# read data 
 air <- read_csv(file = "data.csv")
 names(air)
 
@@ -38,12 +40,14 @@ Gi
 Hi <- cor.test(air$AQI, air$Temperature, method = "pearson")
 Hi
 
+# Correlation matrix
 res <- cor(air)
 res
 
 res2 <- rcorr(as.matrix(air))
 res2
 
+# Visualization of correlation
 chart.Correlation(air, histogram = T, pch = 19)
 
 corrplot(res, method="circle")
