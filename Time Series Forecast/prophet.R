@@ -3,10 +3,16 @@ library(prophet)
 library(tidyverse)
 library(tidyquant)
 library(cowplot)
-library(caret)
+library(MLmetrics)
 
-#read and remove columns from file
+#read and remove columns from file 
+# select one
+c1 <- read_csv("org_ch.csv")
+c1 <- read_csv("org_dh.csv")
+c1 <- read_csv("org_ko.csv")
+c1 <- read_csv("org_hy.csv")
 c1 <- read_csv("org_mu.csv")
+
 View(c1)
 
 # Visualization of data
@@ -14,7 +20,7 @@ qplot(dates, AQI, data = c1)
 
 #store date to ds and log of AQi to y
 ds <- c1$dates
-y <- log(c1$AQI)
+y <- c1$AQI
 
 # Create a datframe with it
 df <- data.frame(ds, y)
@@ -37,16 +43,16 @@ p2 <- df %>%
   geom_smooth(method = "loess", span = 0.2, se = FALSE) +
   theme_tq() +
   labs(
-    title = "Use Log To Show Cycle",
+    title = "With Line",
     caption = "datasets::AirQuality.AQI"
   )
 p_title <- ggdraw() + 
-  draw_label("AQI", size = 18, fontface = "bold", colour = palette_light()[[1]])
+  draw_label("AQI Chennai", size = 18, fontface = "bold", colour = palette_light()[[1]])
 
 plot_grid(p_title, p1, p2, ncol = 1, rel_heights = c(0.1, 1, 1))
 
 #create model m using prophet fuction
-m <- prophet(df, daily.seasonality = TRUE)
+m <- prophet(df)
 
 #create forecasting variable
 future <- make_future_dataframe(m, periods = 7)
@@ -58,10 +64,10 @@ tail(future)
 forecast <- predict(m, future)
 
 #Summary Model
-tail(forecast[c('ds', 'yhat' )], 7)
+tail(forecast[c('ds', 'yhat' )])
 
 #Check result
-exp(4.925374)
+exp(4.058228)
 
 
 #plot forecasting
@@ -75,4 +81,4 @@ prophet_plot_components(m, forecast)
 
 # calculate accuracy(0.4495045)
 
-RMSE(forecast$yhat, y, na.rm = T)
+RMSE(forecast$yhat, y)
