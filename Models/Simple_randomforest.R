@@ -12,6 +12,7 @@ set.seed(1234)
 ind <- sample(2, nrow(air), replace = T, prob = c(.7, .3))
 training <- air[ind == 1, ]
 test <- air[ind == 2, ]
+
 # create model
 set.seed(222)
 rf <- randomForest(PM25 ~ .,
@@ -26,23 +27,23 @@ summary(rf)
 print(rf)
 attributes(rf)
 rf$importance
-# save(rf, file = "randomforest.rda")
+
 # fit models
 p1 <- predict(rf, test)
 
 # test accuracy
 rmse(log(test$AQI), log(p1))
 RMSE(p1, test$PM25)
+
 # accuracy table
 pre <- p1
 act <- test$PM25
 t1 <- cbind(pre, act)
 View(t1)
-
 plot(rf, log = "y")
 
 
-# fine tuning
+# tuning parameter (Grid search)
 oob.err <- double(13)
 test.err <- double(13)
 
