@@ -29,6 +29,12 @@ quantile(air$AQI,.99)
 ls <-quantile(air$AQI,.99)
 air$AQI[air$AQI > ls] <- ls
 
+# removed the outliers in AQI
+summary(air$no2)
+quantile(air$no2, .99)
+hist(air$no2)
+ld <- quantile(air$no2, .99)
+air$no2[air$no2 > ld] <- ld
+
 # write into a csv
 write_csv(air, "data.csv")
-
