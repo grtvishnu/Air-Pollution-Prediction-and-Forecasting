@@ -39,3 +39,5 @@ p <- ggplot(air, aes(x=x) ) +
   theme_ipsum() +
   xlab("value of x")
 p
+
+

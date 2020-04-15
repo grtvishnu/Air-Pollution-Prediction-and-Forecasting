@@ -78,5 +78,5 @@ g <- ggplot(impo, aes(x = reorder(atta, V2), y = V2))+
   ylab("Importance")
   
 ggplotly(g)
-
+  
 
