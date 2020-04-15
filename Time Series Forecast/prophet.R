@@ -5,7 +5,7 @@ library(tidyquant)
 library(cowplot)
 library(MLmetrics)
 
-#read and remove columns from file 
+#read from file 
 # select one
 c1 <- read_csv("org_ch.csv")
 c1 <- read_csv("org_dh.csv")
