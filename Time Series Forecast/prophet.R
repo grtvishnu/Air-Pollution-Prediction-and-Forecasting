@@ -20,7 +20,7 @@ qplot(dates, AQI, data = c1)
 
 #store date to ds and log of AQi to y
 ds <- c1$dates
-y <- c1$AQI
+y <- log(c1$AQI) # log is used to find clear seasonality
 
 # Create a datframe with it
 df <- data.frame(ds, y)
