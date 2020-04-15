@@ -4,7 +4,7 @@ library(Metrics)
 library(tidyverse)
 
 # load data
-air <- read.csv(file = "data.csv")
+air <- read_csv(file = "data.csv")
 str(air)
 
 # split data

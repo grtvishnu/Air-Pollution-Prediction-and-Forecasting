@@ -8,7 +8,7 @@ library(tensorflow)
 library(reticulate)
 
 # Data
-air <- read.csv(file = "data.csv")
+air <- read_csv(file = "data.csv")
 str(air)
 
 # Neural Network Visualization

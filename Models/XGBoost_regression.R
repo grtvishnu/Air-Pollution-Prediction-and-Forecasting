@@ -39,7 +39,7 @@ print(xgbFit)
 pred <- predict(xgbFit, dtest)
 print(length(pred))
 print(head(pred))
-RMSE(pred, ts_labels, na.rm = T)
+RMSE(pred, ts_labels)
 
 # Feature Importance
 importance_matrix <- xgb.importance(model = xgbFit)

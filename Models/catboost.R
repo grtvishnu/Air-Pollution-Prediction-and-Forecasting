@@ -6,7 +6,7 @@ library(plotly)
 library(tidyverse)
 library(MLmetrics)
 # Read data
-air <- read.csv(file = "data.csv")
+air <- read_csv(file = "data.csv")
 str(air)
 #Split data
 set.seed(1234)
@@ -48,7 +48,7 @@ y_pred <- catboost.predict(model, test_pool)
 postResample(y_pred, test$PM25)
 
 rmse(log(test$PM25), log(y_pred))
-RMSE(y_pred, test$PM25, na.rm = T)
+RMSE(y_pred, test$PM25)
 
 # feature importence
 importance <- catboost.get_feature_importance(model,
