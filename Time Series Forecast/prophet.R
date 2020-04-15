@@ -5,7 +5,7 @@ library(tidyquant)
 library(cowplot)
 library(MLmetrics)
 
-#read and remove columns from file 
+#read from file 
 # select one
 c1 <- read_csv("org_ch.csv")
 c1 <- read_csv("org_dh.csv")
@@ -20,7 +20,7 @@ qplot(dates, AQI, data = c1)
 
 #store date to ds and log of AQi to y
 ds <- c1$dates
-y <- c1$AQI
+y <- log(c1$AQI) # log is used to find clear seasonality
 
 # Create a datframe with it
 df <- data.frame(ds, y)
