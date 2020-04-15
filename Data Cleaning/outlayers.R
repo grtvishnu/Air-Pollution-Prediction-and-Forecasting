@@ -31,3 +31,4 @@ air$AQI[air$AQI > ls] <- ls
 
 # write into a csv
 write_csv(air, "data.csv")
+
