@@ -22,7 +22,6 @@
 ⚡️**Model for Forecasting:**
 - `Prophet Introduced by Facebook`
 ![Prophet](images/r1.png) 
-<br />
 ![Prophet Forecast](images/prophet_forecast_R.png) 
 <br />
 `Prophet` - Accuracy of 24 AQI (RMSE)
