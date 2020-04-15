@@ -22,6 +22,7 @@
 ⚡️**Model for Forecasting:**
 - `Prophet Introduced by Facebook`
 ![Prophet](images/r1.png) 
+![Prophet Forecast](images/prophet_forecast_R.png) 
 🌈**Detection of Air pollution:**
 
  - using Logistic Regression That can detect the air pollution and classify air pollution is high or not
