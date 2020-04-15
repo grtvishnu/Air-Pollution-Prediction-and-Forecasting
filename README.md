@@ -1,7 +1,14 @@
 # PREDICTION & FORECASTING OF AIR QUALITY USING MACHINE LEARNING MODELS
 ### Features ✨
 
-❤️ **Accurate**: More accurate with Advanced models like CatBoost.
+ - PM 2.5
+ - PM 10
+ - AQI
+ - NO2
+ - Temperature 
+ - Pressure
+ - Rainfall
+ - Wind Speed
 
 
 
@@ -22,14 +29,7 @@
 
 
 🔥**Features:**
- - PM 2.5
- - PM 10
- - AQI
- - NO2
- - Temperature 
- - Pressure
- - Rainfall
- - Wind Speed
+
  
 
 🚀 **Interface Using shiny:**
