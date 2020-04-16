@@ -1,4 +1,4 @@
-# AIR POLLUTION PREDICTION AND FORECASTING
+# AIR POLLUTION FORECASTING AND PREDICTION
 ### Features ✨
 
 ❤️ **Accurate**: More accurate with Advanced models like CatBoost.
