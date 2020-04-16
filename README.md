@@ -1,4 +1,4 @@
-# AIR POLLUTION PREDICTION USING CATBOOST AND DEEPLEARNING 
+# AIR POLLUTION PREDICTION AND FORECASTING
 ### Features ✨
 
 ❤️ **Accurate**: More accurate with Advanced models like CatBoost.
