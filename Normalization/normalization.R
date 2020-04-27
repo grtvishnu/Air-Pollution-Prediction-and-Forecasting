@@ -24,3 +24,5 @@ s <- apply(air, 2, sd)
 z_air <- scale(air, center = m, scale = s)
 z_air <- as.tibble(z_air)
 head(z_air)
+
+c2$AQI<- scale(c2$AQI, center = T, scale = T)
