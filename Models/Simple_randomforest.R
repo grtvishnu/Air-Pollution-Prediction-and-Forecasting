@@ -13,6 +13,7 @@ ind <- sample(2, nrow(air), replace = T, prob = c(.7, .3))
 training <- air[ind == 1, ]
 test <- air[ind == 2, ]
 
+tic <- print(Sys.time()) 
 # create model
 set.seed(222)
 rf <- randomForest(PM25 ~ .,
@@ -21,7 +22,8 @@ rf <- randomForest(PM25 ~ .,
                    ntree = 500,
                    proximity = F
 )
-
+toc <- print(Sys.time())
+print(toc-tic)
 # print model
 summary(rf)
 print(rf)

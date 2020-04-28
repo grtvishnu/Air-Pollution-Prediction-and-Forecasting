@@ -28,13 +28,14 @@ air <- air %>%
 #Scatter plot
 air %>%
   plot()
-
+tic <- print(Sys.time()) 
 # model 1
 lm(PM25 ~ AQI, data = train) %>% abline()
 fit <- lm(AQI ~PM25, data = train)
 ypred <- predict(fit, newdata = test)
 RMSE(ypred, test$AQI )
-
+toc <- print(Sys.time())
+print(toc-tic)
 fit
 summary(fit)
 confint(fit)
