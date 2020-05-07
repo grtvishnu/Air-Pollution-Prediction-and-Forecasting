@@ -56,3 +56,8 @@ xgb.plot.tree(
   plot_width = 1920, plot_height = 1080, render = TRUE,
   show_node_id = FALSE
 )
+
+#save model
+
+saveRDS(xgbFit, file = "xgb.rds")
+rf<-readRDS("xgb.rds")
