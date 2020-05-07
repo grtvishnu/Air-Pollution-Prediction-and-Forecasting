@@ -1,7 +1,7 @@
 # Libraries
 library(keras)
 library(mlbench)
-library(dplyr)
+library(tidyverse)
 library(magrittr)
 library(neuralnet)
 library(tensorflow)
@@ -138,3 +138,12 @@ pred <- model %>% predict(test)
 mean((testtarget - pred)^2)
 plot(testtarget, pred)
 plot(mymodel)
+
+#save the model
+
+model %>% save_model_tf("model")
+summary(model)
+
+#load model
+new_model <- load_model_tf("model")
+summary(new_model)
