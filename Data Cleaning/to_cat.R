@@ -10,3 +10,5 @@ air$AQI <- cut(AQI,x, 6, labels = c("Good", "Moderate","Unhealthy for sensitive 
                        "Unhealthy","Very Unhealthy","Hazardous"), )
 
 write_csv(air,"data_cat.csv")
+
+
