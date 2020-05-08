@@ -14,7 +14,7 @@ str(air)
 # Neural Network Visualization
 n <- neuralnet(PM25 ~ Temperature+ Wind.Speed..km.h.+ Pressure+ no2 + Rainfall + PM10 + AQI,
                data = air,
-               hidden = c(100, 50),
+               hidden = c(10, 5),
                linear.output = F,
                lifesign = "full",
                rep = 1,
@@ -145,5 +145,5 @@ model %>% save_model_tf("model")
 summary(model)
 
 #load model
-new_model <- load_model_tf("model")
-summary(new_model)
+model <- load_model_tf("model")
+summary(model)
