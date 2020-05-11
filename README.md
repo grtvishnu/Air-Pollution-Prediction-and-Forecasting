@@ -25,6 +25,17 @@
  - AQI
 
 
+📦 **Used Modules**
+ 1. caret
+ 2. tidyverse
+ 3. tidymodels
+ 4. randomforest
+ 5. xgboost
+ 6. data.table
+ 7. Hmisc
+ 8. catboost
+ 9. mice
+ 
 🚀 **Interface Using shiny:**
 _Shiny is an R package that makes it easy to build interactive web apps straight from R.it is used for showing the insight of the data and prediction._
 ### Collaborators <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
