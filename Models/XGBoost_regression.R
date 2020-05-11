@@ -60,4 +60,4 @@ xgb.plot.tree(
 #save model
 
 saveRDS(xgbFit, file = "xgb.rds")
-rf<-readRDS("xgb.rds")
+xgbFit<-readRDS("xgb.rds")
