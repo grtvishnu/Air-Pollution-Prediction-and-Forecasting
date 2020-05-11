@@ -93,7 +93,7 @@ p1 <- air_c %>%
   geom_point(color = palette_light()[[1]], alpha = 0.5) +
   theme_tq() +
   labs(
-    title = "From 2016 to 2020"
+    title = "Chennai"
   )
 p2 <- air_c %>%
   ggplot(aes(dates, AQI)) +
@@ -115,7 +115,7 @@ p3 <- air_d %>%
   geom_point(color = palette_light()[[1]], alpha = 0.5) +
   theme_tq() +
   labs(
-    title = "From 2016 to 2020"
+    title = "Delhi"
   )
 p4 <- air_d %>%
   ggplot(aes(dates, AQI)) +
@@ -137,7 +137,7 @@ p5 <- air_h %>%
   geom_point(color = palette_light()[[1]], alpha = 0.5) +
   theme_tq() +
   labs(
-    title = "From 2016 to 2020"
+    title = "Hydrabad"
   )
 p6 <- air_h %>%
   ggplot(aes(dates, AQI)) +
@@ -159,7 +159,7 @@ p7 <- air_k %>%
   geom_point(color = palette_light()[[1]], alpha = 0.5) +
   theme_tq() +
   labs(
-    title = "From 2016 to 2020"
+    title = "Kolkata"
   )
 p8 <- air_k %>%
   ggplot(aes(dates, AQI)) +
@@ -181,7 +181,7 @@ p9 <- air_m %>%
   geom_point(color = palette_light()[[1]], alpha = 0.5) +
   theme_tq() +
   labs(
-    title = "From 2016 to 2020"
+    title = "Mumbai"
   )
 p0 <- air_m %>%
   ggplot(aes(dates, AQI)) +
@@ -196,3 +196,7 @@ p0 <- air_m %>%
 p_title_m <- ggdraw() + 
   draw_label("AQI", size = 18, fontface = "bold", colour = palette_light()[[1]])
 plot_grid(p_title_m, p1, p2, ncol = 1, rel_heights = c(0.1, 1, 1))
+
+  
+grid.arrange(p1,p3,p5,p7,p9, ncol=2)
+
