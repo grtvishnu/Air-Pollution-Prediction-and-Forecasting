@@ -18,15 +18,14 @@
 
 
 🔥**Features:**
- - PM 2.5
- - PM 10
- - SO2
- - NO2
- - CO
- - Temperature 
- - Pressure
- - Rainfall
- - Humidity
+ - Temperature(°C)
+ - Wind Speed(Km/h)
+ - Pressure(Pa)
+ - NO2 (ppm)
+ - Rainfall(Cm)
+ - PM10(μg/m3)
+ - PM2.5(μg/m3)
+ - AQI
 
 
 🚀 **Interface Using shiny:**
