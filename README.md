@@ -25,7 +25,7 @@
  - AQI
 
 
-📦 **Used Modules**
+📦 **Used Packages**
  1. caret
  2. tidyverse
  3. tidymodels
