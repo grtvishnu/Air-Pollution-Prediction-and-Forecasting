@@ -5,18 +5,16 @@
 
 
 
-⚡️**Models:**
+⚡️**Models for Prediction:**
  - `Random Forest` - Random forests or random decision forests are an ensemble learning method for classification, regression.
  - `XGBoost` - XGBoost is an open-source software library which provides a gradient boosting.
  - `Deep Learning` - Multilayer Perceptron, Deep learning is part of a broader family of machine learning methods based on artificial   neural networks with representation learning.
  - `CatBoost` - CatBoost is an open-source gradient boosting on decision trees library with categorical features support out of the box.
- - `Logistic Regression` - the logistic model is used to model the probability of a certain class or event.
- 
 
-🌈**Detection of Air pollution:**
+🌈**Models For Forecasting:**
 
- - using Logistic Regression That can detect the air pollution and classify air pollution is high or not
-
+ - `LSTM`- A Deep Learning method to find Future values of AQI upto 7 days 
+ - `Prophet - A package from facebook
 
 
 🔥**Features:**
