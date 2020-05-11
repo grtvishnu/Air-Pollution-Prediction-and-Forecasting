@@ -1,9 +1,6 @@
 # AIR POLLUTION FORECASTING AND PREDICTION
 ### MODELS ✨
 
-❤️ **Accurate**: More accurate with Advanced models like CatBoost.
-
-
 
 ⚡️**Models for Prediction:**
  - `Random Forest` - Random forests or random decision forests are an ensemble learning method for classification, regression.
