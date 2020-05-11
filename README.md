@@ -35,7 +35,10 @@
  7. Hmisc
  8. catboost
  9. mice
- 
+ ## Prediction Data 📝
+ ![](images/Histogram.png)
+ ## Forecast Data 📝
+ ![](images/Forecast.png)
 🚀 **Interface Using shiny:**
 _Shiny is an R package that makes it easy to build interactive web apps straight from R.it is used for showing the insight of the data and prediction._
 ### Collaborators <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
