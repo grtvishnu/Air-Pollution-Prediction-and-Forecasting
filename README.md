@@ -35,6 +35,8 @@
  7. Hmisc
  8. catboost
  9. mice
+ ## Prediction Data 📝
+ ![](images/Histogram.png)
  ## Forecast Data 📝
  ![](images/Forecast.png)
 🚀 **Interface Using shiny:**
