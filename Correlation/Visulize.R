@@ -1,30 +1,33 @@
 library(tidyverse)
 library(hrbrthemes)
-
+require(gridExtra)
 # Histogram
-ggplot(data = air, aes(x= Temperature))+
+a <- ggplot(data = air, aes(x= Temperature))+
   geom_histogram()
 
-ggplot(data = air, aes(x= Wind.Speed..km.h.))+
+b <- ggplot(data = air, aes(x= Wind.Speed..km.h.))+
   geom_histogram()
 
-ggplot(data = air, aes(x= Pressure))+
+c <- ggplot(data = air, aes(x= Pressure))+
   geom_histogram()
 
-ggplot(data = air, aes(x= no2))+
+d <- ggplot(data = air, aes(x= no2))+
   geom_histogram()
 
-ggplot(data = air, aes(x= Rainfall))+
+e <- ggplot(data = air, aes(x= Rainfall))+
   geom_histogram()
 
-ggplot(data = air, aes(x= PM10))+
+f <- ggplot(data = air, aes(x= PM10))+
+  geom_histogram(binwidth = 10)+
+  xlim(0,200)
+
+g <- ggplot(data = air, aes(x= AQI))+
   geom_histogram()
 
-ggplot(data = air, aes(x= AQI))+
+h <- ggplot(data = air, aes(x= PM25))+
   geom_histogram()
 
-ggplot(data = air, aes(x= PM25))+
-  geom_histogram()
+grid.arrange(a,b,c,d,e,f,g,h, ncol=4)
 
 hist(air$Temperature, breaks=30 , xlim=c(0,60) , col=rgb(1,0,0,0.5) , xlab="height" , ylab="nbr of plants" , main="" )
 hist(air$Wind.Speed..km.h., breaks=30 , xlim=c(0,60) , col=rgb(0,0,1,0.5) , xlab="height" , ylab="" , main="")
@@ -41,3 +44,4 @@ p <- ggplot(air, aes(x=x) ) +
 p
 
 
+grid.arrange(a,b,c,d,e,f,g,h, ncol=4)
