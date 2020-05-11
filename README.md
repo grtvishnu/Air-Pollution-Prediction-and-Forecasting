@@ -15,13 +15,13 @@
 
 
 🔥**Features:**
- - Temperature(°C)
- - Wind Speed(Km/h)
- - Pressure(Pa)
+ - Temperature (°C)
+ - Wind Speed (Km/h)
+ - Pressure (Pa)
  - NO2 (ppm)
- - Rainfall(Cm)
- - PM10(μg/m3)
- - PM2.5(μg/m3)
+ - Rainfall (Cm)
+ - PM10 (μg/m3)
+ - PM2.5 (μg/m3)
  - AQI
 
 
