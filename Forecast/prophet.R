@@ -5,31 +5,38 @@ library(tidyquant)
 library(cowplot)
 library(MLmetrics)
 
+
 #read and remove columns from file 
-# select one
 chennai <- read_csv("c1_cat.csv")
 delhi <- read_csv("d1_cat.csv")
 hydrabad <- read_csv("h1_cat.csv")
 kolkata <- read_csv("k1_cat.csv")
 mumbai <- read_csv("m1_cat.csv")
 
+
+# select one
 c1 <- read_csv("org_ch.csv")
 c1 <- read_csv("org_dh.csv")
 c1 <- read_csv("org_ko.csv")
 c1 <- read_csv("org_hy.csv")
 c1 <- read_csv("org_mu.csv")
 
+
 View(c1)
+
 
 # Visualization of data
 qplot(dates, AQI, data = c1)
+
 
 #store date to ds and log of AQi to y
 ds <- c1$dates
 y <- c1$AQI
 
+
 # Create a datframe with it
 df <- data.frame(ds, y)
+
 
 #plot log data to see more seasonality
 qplot(ds, y, data = df)
