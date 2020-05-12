@@ -72,6 +72,7 @@ forecast <- predict(m, future)
 #Summary Model
 tail(forecast[c('ds', 'yhat' )])
 
+
 #Check result
 exp(4.058228)
 
@@ -84,7 +85,5 @@ plot(m, forecast)
 prophet_plot_components(m, forecast)
 
 
-
 # calculate accuracy(0.4495045)
-
 RMSE(forecast$yhat, y)
