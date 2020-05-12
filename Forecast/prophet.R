@@ -34,6 +34,7 @@ df <- data.frame(ds, y)
 #plot log data to see more seasonality
 qplot(ds, y, data = df)
 
+
 #advanced Visualization
 p1 <- c1 %>%
   ggplot(aes(dates, AQI)) +
@@ -57,8 +58,10 @@ p_title <- ggdraw() +
 
 plot_grid(p_title, p1, p2, ncol = 1, rel_heights = c(0.1, 1, 1))
 
+
 #create model m using prophet fuction
 m <- prophet(df)
+
 
 #create forecasting variable
 future <- make_future_dataframe(m, periods = 7)
