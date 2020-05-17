@@ -26,9 +26,11 @@ library(mlr)
 library(scales)
 library(shinythemes)
 library(plotly)
+library(data.table)
 library(flexdashboard)
+library(DiagrammeR)
 ui <- fluidPage(
-  theme = shinytheme("cosmo"),
+  theme = shinytheme("superhero"),
   
   navbarPage(title = "Air pollution",
              
@@ -123,7 +125,10 @@ ui <- fluidPage(
                                      a(href="https://en.wikipedia.org/wiki/Random_forest", "Random Forest")
                                    ),
                                    mainPanel(
-                                     div(verbatimTextOutput("rfoutput"))
+                                     div(verbatimTextOutput("rfoutput")),
+                                     div(
+                                       plotOutput("rfplot")
+                                     )
                                      
                                    )
                                  )
@@ -141,7 +146,10 @@ ui <- fluidPage(
                                      a(href="https://en.wikipedia.org/wiki/Naive_Bayes_classifier", "Naive Bayes Classifier")
                                    ),
                                    mainPanel(
-                                     div(verbatimTextOutput("nboutput"))
+                                     div(verbatimTextOutput("nboutput")),
+                                     div(
+                                       plotOutput("xgbplot")
+                                     )
                                      
                                    )
                                  )
@@ -825,7 +833,7 @@ server <- function(input, output, session) {
     updateSelectInput(session, inputId = "rfvar", choices = names(data_input()))
   }
   )
-  
+  rf_fit <- readRDS("random_forest.rds")
   rfout <- reactive({
     df <- data_input()
     
@@ -875,6 +883,25 @@ server <- function(input, output, session) {
     rfout()
   })
   
+  output$rfplot <- renderPlot({
+ if (input$rfoption =="Importance"){
+   varImpPlot(rf_fit,
+              sort = T,
+              n.var = 10,
+              main = "Top 10"
+   )
+ }
+    if (input$rfoption =="Pred. Accuracy"){
+      plot(rf, log = "y")
+    }
+  
+    if (input$rfoption =="Summary"){
+      hist(treesize(rf_fit),
+           main = "No of nodes for the trees",
+           col = "green"
+      )
+    }
+  })
   
   
   
@@ -884,6 +911,7 @@ server <- function(input, output, session) {
     updateSelectInput(session, inputId = "nbvar", choices = names(data_input()))
   }
   )
+  model <- readRDS("xgb.rds")
   nbout <- reactive({
     
     df <- data_input()
@@ -939,7 +967,19 @@ server <- function(input, output, session) {
   output$nboutput <- renderPrint({
     nbout()
   })
-  
+  output$xgbplot <- renderPlot({
+    if (input$nboption =="Importance"){
+      mat <- xgb.importance(feature_names = colnames(dtrain), model = model)
+      xgb.plot.importance(importance_matrix = mat[1:10])
+    }
+    if (input$nboption =="Pred. Accuracy"){
+      xgb.plot.tree(
+        feature_names = NULL, model = model, trees = 10,
+        plot_width = 800, plot_height = 600, render = TRUE,
+        show_node_id = FALSE
+      )
+    }
+  })
   # NEURAL NETWORKS
   
   observeEvent(input$file1, {

@@ -53,7 +53,7 @@ xgb.plot.importance(importance_matrix = mat[1:10])
 #Xgb tree
 xgb.plot.tree(
   feature_names = NULL, model = xgbFit, trees = 10,
-  plot_width = 1920, plot_height = 1080, render = TRUE,
+  plot_width = 800, plot_height = 600, render = TRUE,
   show_node_id = FALSE
 )
 
