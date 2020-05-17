@@ -30,7 +30,7 @@ library(data.table)
 library(flexdashboard)
 library(DiagrammeR)
 ui <- fluidPage(
-  theme = shinytheme("superhero"),
+  theme = shinytheme("darkly"),
   
   navbarPage(title = "Air pollution",
              
