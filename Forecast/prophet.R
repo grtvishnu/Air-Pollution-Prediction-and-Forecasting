@@ -22,7 +22,7 @@ c1 <- read_csv("org_hy.csv")
 c1 <- read_csv("org_mu.csv")
 
 
-View(c1)
+str(c1)
 
 
 # Visualization of data
