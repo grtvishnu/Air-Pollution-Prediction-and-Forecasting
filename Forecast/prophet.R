@@ -71,7 +71,7 @@ m <- prophet(df)
 
 
 #create forecasting variable
-future <- make_future_dataframe(m, periods = 7)
+future <- make_future_dataframe(m, periods = 14)
 
 
 #analysing the variable
@@ -83,7 +83,7 @@ forecast <- predict(m, future)
 
 
 #Summary Model
-tail(forecast[c('ds', 'yhat' )])
+tail(forecast[c('ds', 'yhat', 'yhat_lower', 'yhat_upper')])
 
 
 #Check result

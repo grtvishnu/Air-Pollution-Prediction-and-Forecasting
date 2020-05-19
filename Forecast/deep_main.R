@@ -94,7 +94,7 @@ summary(model)
 
 
 Epochs = 3   
-for(i in 1:Epochs ){
+my_model<- for(i in 1:Epochs ){
   model %>% fit(x_train, y_train, epochs=1, batch_size=batch_size, verbose=1, shuffle=FALSE)
   model %>% reset_states()
 }
@@ -121,3 +121,6 @@ diff = diff(Series, differences = 1)
 head(diff)
 
 rmse(x_test,predictions)
+
+print(my_model)
+plot(my_model)
