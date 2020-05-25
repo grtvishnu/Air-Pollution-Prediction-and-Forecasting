@@ -31,7 +31,7 @@ qplot(dates, AQI, data = c1)
 
 #store date to ds and log of AQi to y
 ds <- c1$dates
-y <- c1$AQI
+y <- log(c1$AQI)
 
 
 # Create a datframe with it
@@ -57,7 +57,7 @@ p2 <- df %>%
   geom_smooth(method = "loess", span = 0.2, se = FALSE) +
   theme_tq() +
   labs(
-    title = "With Line",
+    title = "With log",
     caption = "datasets::AirQuality.AQI"
   )
 p_title <- ggdraw() + 
