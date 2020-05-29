@@ -31,7 +31,7 @@ qplot(dates, AQI, data = c1)
 
 #store date to ds and log of AQi to y
 ds <- c1$dates
-y <- log(c1$AQI)
+y <- c1$AQI
 
 
 # Create a datframe with it
@@ -61,7 +61,7 @@ p2 <- df %>%
     caption = "datasets::AirQuality.AQI"
   )
 p_title <- ggdraw() + 
-  draw_label("AQI Chennai", size = 18, fontface = "bold", colour = palette_light()[[1]])
+  draw_label("AQI", size = 18, fontface = "bold", colour = palette_light()[[1]])
 
 plot_grid(p_title, p1, p2, ncol = 1, rel_heights = c(0.1, 1, 1))
 
@@ -71,7 +71,7 @@ m <- prophet(df)
 
 
 #create forecasting variable
-future <- make_future_dataframe(m, periods = 14)
+future <- make_future_dataframe(m, periods = 7)
 
 
 #analysing the variable

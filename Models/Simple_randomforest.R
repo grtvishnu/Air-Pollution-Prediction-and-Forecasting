@@ -93,8 +93,8 @@ hist(treesize(rf),
 
 varImpPlot(rf,
            sort = T,
-           n.var = 10,
-           main = "Top 10"
+           n.var = 7,
+           main ="Feature Importance of Random Forest"
 )
 
 # Transfer Learning
