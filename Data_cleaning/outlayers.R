@@ -38,3 +38,7 @@ air$no2[air$no2 > ld] <- ld
 
 # write into a csv
 write_csv(air, "data.csv")
+
+
+ggplot(classby2,aes(Rainfall))+
+  geom_histogram()
