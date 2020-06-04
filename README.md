@@ -11,7 +11,7 @@
 🌈**Models For Forecasting:**
 
  - `LSTM`- A Deep Learning method to find Future values of AQI upto 7 days 
- - `Prophet` - A package from facebook
+ - `Prophet` - a package developed by facebook
 
 
 🔥**Features:**
