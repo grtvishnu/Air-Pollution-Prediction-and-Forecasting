@@ -34,7 +34,7 @@
  6. data.table
  7. Hmisc
  8. catboost
- 9. mice
+ 9. VIM
  ## Prediction Data 📝
  ![](images/Histogram.png)
  ## Forecast Data 📝
