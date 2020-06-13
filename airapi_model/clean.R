@@ -107,3 +107,5 @@ summary(kozhi$pm10)
 boxplot(kozhi$pm10)
 
 rm(a,res,bench,bench1,palette)
+
+
