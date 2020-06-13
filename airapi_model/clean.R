@@ -4,6 +4,7 @@ library(Hmisc)
 library(PerformanceAnalytics)
 library(corrplot)
 library(ccgarch)
+library(randomForest)
 
 # read data -----------------------------------------------------------------------------------
 
@@ -109,3 +110,18 @@ boxplot(kozhi$pm10)
 rm(a,res,bench,bench1,palette)
 
 
+# Model Creation ------------------------------------------------------------------------------
+
+# split data
+set.seed(1234)
+ind <- sample(2, nrow(kozhi), replace = T, prob = c(.7, .3))
+training <- kozhi[ind == 1, ]
+test <- kozhi[ind == 2, ]
+
+
+fm <- as.formula(pm25 ~ co + no2 + pm10 +so2)
+model <- lm(fm, training)
+summary(model)
+
+pred<- predict(model,newdata = test)
+RMSE(pred,test$pm25)
