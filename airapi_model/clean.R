@@ -125,3 +125,12 @@ summary(model)
 
 pred<- predict(model,newdata = test)
 RMSE(pred,test$pm25)
+
+
+
+# output file ---------------------------------------------------------------------------------
+
+kozhi1 <- kozhi %>% 
+  select(co:so2)
+
+write_csv(kozhi1,"model_data.csv")
