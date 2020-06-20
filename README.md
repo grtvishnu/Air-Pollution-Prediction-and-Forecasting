@@ -35,6 +35,7 @@
  7. Hmisc
  8. catboost
  9. VIM
+ 10. Shiny
  ## Prediction Data 📝
  ![](images/Histogram.png)
  ## Forecast Data 📝
