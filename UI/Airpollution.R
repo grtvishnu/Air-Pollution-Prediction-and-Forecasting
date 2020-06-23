@@ -73,7 +73,7 @@ ui <- fluidPage(
                         tabPanel("Plots",
                                  sidebarLayout(
                                    sidebarPanel(
-                                     radioButtons("plotoption", "Choose the Option:", choices = c("Histogram", "BarPlot", "Scatter" )),
+                                     radioButtons("plotoption", "Choose the Option:", choices = c("Histogram", "DensityPlot", "Scatter" )),
                                      selectInput("cols6", "Choose Varibale 1:", choices = "", selected = " ", multiple = TRUE),
                                      textInput("xaxisname", "Write X Axis Name"),
                                      textInput("yaxisname", "Write Y Axis Name"),
@@ -389,8 +389,12 @@ server <- function(input, output, session) {
         xlab(input$xaxisname)+
         ylab(input$yaxisname)+
         ggtitle(input$title)
-    } else if(input$plotoption == "BarPlot"){
-      barplot(df[, input$cols6], xlab = input$xaxisname, ylab = input$yaxisname, main = input$title)
+    } else if(input$plotoption == "DensityPlot"){
+      ggplot(data = df, aes(x= df[, input$cols6])) +
+        geom_density() +
+        xlab(input$xaxisname)+
+        ylab(input$yaxisname)+
+        ggtitle(input$title)
     } else if (input$plotoption == "Scatter"){
       scatter.smooth(df[, input$cols6], xlab = input$xaxisname, ylab = input$yaxisname, main = input$title)
     }
