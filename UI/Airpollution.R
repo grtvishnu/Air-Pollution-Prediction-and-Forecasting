@@ -390,11 +390,13 @@ server <- function(input, output, session) {
         ylab(input$yaxisname)+
         ggtitle(input$title)
     } else if(input$plotoption == "DensityPlot"){
-      ggplot(data = df, aes(x= df[, input$cols6])) +
+      ggplot(data = df, aes(x= df[, input$cols6]),fill = "lightgray") +
         geom_density() +
         xlab(input$xaxisname)+
         ylab(input$yaxisname)+
-        ggtitle(input$title)
+        ggtitle(input$title)+
+        geom_vline(aes(xintercept = mean(input$cols6)), 
+                   linetype = "dashed", size = 0.6)
     } else if (input$plotoption == "Scatter"){
       scatter.smooth(df[, input$cols6], xlab = input$xaxisname, ylab = input$yaxisname, main = input$title)
     }
@@ -1313,10 +1315,16 @@ server <- function(input, output, session) {
   
   output$text1 <- renderText({
     str1 <- paste("LUCKY THIRTEEN") 
-    str2 <- paste("Vishnu V U, Teslin Rose, Vini, Sruthi") 
-    str3 <- paste("***********************")
+    str2 <- paste("Vishnu") 
+    str3 <- paste("Teslin Rose") 
+    str4 <- paste("Vini") 
+    str5 <- paste("Sruthi") 
+    str6 <- paste("***********************")
+    str7 <- paste("optra7@gmail.com")
+    str8 <- paste("9562515945")
     
-    HTML(paste(str1, str2, str3, sep = '<br/>'))
+    
+    HTML(paste(str1, str2, str3, str4, str5, str6, str7, str8, sep = '<br/>'))
   })
   
 }
