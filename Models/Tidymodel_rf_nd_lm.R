@@ -1,6 +1,8 @@
 library(tidyverse)
 library(tidymodels)
 
+model_data <- read_csv("model_data.csv")
+
 model_data <- model_data %>% 
   select(co:pm10,so2,pm25)
 
