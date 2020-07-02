@@ -3,16 +3,11 @@ library(tidymodels)
 
 model_data <- read_csv("model_data.csv")
 
-model_data <- model_data %>% 
-  select(co:pm10,so2,pm25)
 
 
-table(is.na(model_data))
+# Create Model --------------------------------------------------------------------------------
 
-ggplot(model_data,aes(pm25))+
-  geom_density()
-
-
+#split
 set.seed(1234)
 splitz<- model_data %>% 
   initial_split()
@@ -20,23 +15,26 @@ splitz<- model_data %>%
 train <- training(splitz)
 test <- testing(splitz)
 
+#Linear Model
 lm_spec <- linear_reg() %>% 
   set_engine(engine = "lm")
 
-
+#fit
 lmfit<- lm_spec %>% 
   fit(pm25~., data=train)
 
 
-
+# randomForest model
 rf_spec <- rand_forest(mode = "regression") %>% 
   set_engine("ranger")
 
-
+#fit
 rf_fit <- rf_spec %>% 
   fit(pm25 ~ ., data=train)
 
+# Result --------------------------------------------------------------------------------------
 
+# result of model in trainingset
 result_train<- lm_fit %>% 
   predict(new_data=train) %>% 
   mutate(truth=train$pm25,
@@ -46,7 +44,7 @@ result_train<- lm_fit %>%
               mutate(truth=train$pm25,
                      model = "rf"))
 
-
+# result of model in testset
 result_test<- lm_fit %>% 
   predict(new_data=test) %>% 
   mutate(truth=test$pm25,
@@ -56,20 +54,18 @@ result_test<- lm_fit %>%
               mutate(truth=test$pm25,
                      model = "rf"))
 
-
-
+# Find Error Train
 result_train %>% 
   group_by(model) %>% 
   rmse(truth=truth, estimate= .pred)
 
 
-
+# Find error test
 result_test %>% 
   group_by(model) %>% 
   rmse(truth=truth, estimate= .pred)
 
-
-
+# Visualize Prediction of 2 models
 result_test %>% 
   mutate(train="testing") %>% 
   bind_rows(result_train %>% 
@@ -80,8 +76,9 @@ result_test %>%
   facet_wrap(~train)
 
 
-air_folds<- vfold_cv(train)
+# Cross Validation ----------------------------------------------------------------------------
 
+air_folds<- vfold_cv(train)
 
 rf_res<- fit_resamples(
   pm25~.,
@@ -90,10 +87,11 @@ rf_res<- fit_resamples(
   control = control_resamples(save_pred = T)
 )
 
+# Result
 rf_res %>% 
   collect_metrics()
  
-
+# Visualization
 rf_res %>% 
   unnest(.predictions) %>% 
   ggplot(aes(pm25, .pred, color=id))+
