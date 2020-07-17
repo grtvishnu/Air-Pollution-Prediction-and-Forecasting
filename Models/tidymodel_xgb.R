@@ -27,7 +27,7 @@ xgb_grid <- grid_latin_hypercube(
   sample_size=sample_prop(),
   finalize(mtry(),train),
   learn_rate(),
-  size = 20 # u can increse this for more grid
+  size = 20 # u can increase this for more grid
   )
 
 
@@ -93,18 +93,3 @@ final_res %>%
 final_res %>% 
   collect_predictions() %>% 
   rmse(truth=pm25, estimate= .pred)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
