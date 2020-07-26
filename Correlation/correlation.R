@@ -59,4 +59,3 @@ corrplot(res, type="upper", order="hclust")
 
 palette = colorRampPalette(c("green", "white", "red")) (20)
 heatmap(x = res, col = palette, symm = TRUE)
-
