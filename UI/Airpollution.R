@@ -153,6 +153,7 @@ ui <- fluidPage(
                                      
                                    )
                                  )
+                        )
                         ),
              
              tabPanel("Contact", 
@@ -164,9 +165,8 @@ ui <- fluidPage(
                       )
              )
   )
-  )
 )
-  
+
 
 
 
