@@ -29,7 +29,6 @@ summary(rf)
 print(rf)
 attributes(rf)
 rf$importance
-
 # fit models
 p1 <- predict(rf, test)
 
@@ -51,7 +50,7 @@ test.err <- double(13)
 # mtry is no of Variables randomly chosen at each split
 for (mtry in 1:12)
 {
-  rf <- randomForest(PM25 ~ PM25 ~ .,
+  rf <- randomForest(PM25 ~ .,
                      data = training,
                      mtry = mtry,
                      ntree = 500,
