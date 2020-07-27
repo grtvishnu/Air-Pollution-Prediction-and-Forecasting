@@ -11,7 +11,7 @@ trees_train <- training(trees_split)
 trees_test <- testing(trees_split)
 
 
-# Data Preprocessing
+# Data Pre-processing
 tree_rec <- recipe(PM25 ~ ., data = trees_train)
 tree_prep <- prep(tree_rec)
 juiced <- juice(tree_prep)

@@ -108,11 +108,11 @@ plot(mymodel)
 # ultra fine model (100, 50, 20)
 model <- keras_model_sequential()
 model %>%
-  layer_dense(units = 1000, activation = "relu", input_shape = c(7)) %>%
+  layer_dense(units = 100, activation = "relu", input_shape = c(7)) %>%
   layer_dropout(rate = 0.03) %>%
-  layer_dense(units = 500, activation = "relu") %>%
+  layer_dense(units = 50, activation = "relu") %>%
   layer_dropout(rate = 0.02) %>%
-  layer_dense(units = 200, activation = "relu") %>%
+  layer_dense(units = 20, activation = "relu") %>%
   layer_dropout(rate = 0.01) %>%
   layer_dense(units = 1, )
 
@@ -135,7 +135,7 @@ mymodel <- model %>%
 # Evaluate
 model %>% evaluate(test, testtarget)
 pred <- model %>% predict(test)
-mean((testtarget - pred)^2)
+sqrt(mean((testtarget - pred)^2))
 plot(testtarget, pred)
 plot(mymodel)
 

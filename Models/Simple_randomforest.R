@@ -34,7 +34,6 @@ rf$importance
 p1 <- predict(rf, test)
 
 # test accuracy
-rmse(log(test$AQI), log(p1))
 RMSE(p1, test$PM25)
 
 # accuracy table

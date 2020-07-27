@@ -1,7 +1,7 @@
 library(tidymodels)
 library(tidyverse)
-
-
+library(xgboost)
+air <- read.csv("data.csv")
 set.seed(1234)
 
 splitz<- initial_split(air)
@@ -32,7 +32,7 @@ xgb_grid <- grid_latin_hypercube(
 
 
 xgb_wf <- workflow() %>% 
-  add_formula(pm25 ~ .) %>%
+  add_formula(PM25 ~ .) %>%
   add_model(xgb_spec)
 
 xgb_wf

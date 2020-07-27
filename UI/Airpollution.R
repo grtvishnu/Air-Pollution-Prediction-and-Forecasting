@@ -154,30 +154,6 @@ ui <- fluidPage(
                                    )
                                  )
                         ),
-                        tabPanel("CATBoost",
-                                 sidebarLayout(
-                                   sidebarPanel(
-                                     selectInput("nnvar", "Select Variable", choices = "", selected = ""),
-                                     textInput("nnprop", "Proportion", value = 0.8, placeholder = "Proportion for training data"),
-                                     textInput("nnhl1", "Value for First Hidden Layer", value = 5, placeholder = "Value for first hidden layer"),
-                                     textInput("nnhl2", "Value for Second Hidden Layer", value = 3, placeholder = "Value for first hidden layer"),
-                                     textInput("nntype", "Method", value = "neuralnet", placeholder = "Write name of the method"),
-                                     radioButtons("nnoption", "Select Method", choices = c("No Option", "Table", "Show Prop.", "Train & Test Data", "Fit", "Summary", "Predictions", "Pred. Accuracy", "Plot")),
-                                     # radioButtons("nnplottype", "Select Plot", choices = c("No Plot", "Weight Decay", "Network Plot")),
-                                     hr(),
-                                     helpText("Variable selected must be categorical and numerical."),
-                                     hr(),
-                                     a(href="http://mlwiki.org/index.php/Neural_Networks", "Neural Networks")
-                                   ),
-                                   mainPanel(
-                                     div(verbatimTextOutput("nnoutput")),
-                                     div(plotOutput("nnplot"))
-                                   )
-                                 )
-                        )
-                        
-                        
-             ),
              
              tabPanel("Contact", 
                       sidebarLayout(
@@ -188,7 +164,9 @@ ui <- fluidPage(
                       )
              )
   )
+  )
 )
+  
 
 
 
@@ -264,13 +242,16 @@ server <- function(input, output, session) {
       
       if (input$indata == "Full"){
         print(df)
-      } else if(input$trans1 == "Not-Required"){
-        data <- df[, input$cols]
+      }else if(input$indata == "Columns"){
+        print(names(df))
+      }else if(input$trans1 == "Not-Required"){
         print(data)
-      } else if(input$trans1 == "standardize"){
+      }else if(input$trans1 == "standardize"){
         data <- df[, input$cols]
-        normalize(data)
-        print(data)
+        m <- colMeans(data)
+        s <- apply(data, 2, sd)
+        z_data <- scale(data, center = m, scale = s)
+        print(z_data)
       }
       
     }

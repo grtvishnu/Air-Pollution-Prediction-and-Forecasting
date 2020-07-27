@@ -11,8 +11,8 @@ summary(air)
 
 set.seed(1234)
 ind <- sample(2, nrow(air), replace = T, prob = c(.7, .3))
-train <- air[ind == 1, 1:8]
-test <- air[ind == 2, 1:8]
+train <- air[ind == 1, 1:7]
+test <- air[ind == 2, 1:7]
 
 t_train <- setDT(train)
 t_test <- setDT(test)
@@ -34,21 +34,29 @@ xgbFit <- xgboost(
   colsample_bytree = 0.4603
 )
 
+# xgb_new <- xgboost(data = dtrain,
+#                label = labels,
+#                trees = 1000,
+#                mtry = 8,
+#                min_n = 10,
+#                tree_depth = 3,
+#                learn_rate= 	0.00644471,
+#                loss_reduction = 0.000002150994,
+#                sample_size = 0.4017052,
+#                eval_metric ="rmse",
+#                nrounds = 1000)
+
 # predict
-print(xgbFit)
+print(xgb_new)
 pred <- predict(xgbFit, dtest)
 print(length(pred))
 print(head(pred))
 RMSE(pred, ts_labels)
-
+aa <- cbind(ts_labels,pred)
 # Feature Importance
 importance_matrix <- xgb.importance(model = xgbFit)
 print(importance_matrix)
 xgb.plot.importance(importance_matrix = importance_matrix)
-preds2 <- exp(predict(xgbFit, newdata = dtest)) - 1
-
-mat <- xgb.importance(feature_names = colnames(dtrain), model = xgbFit)
-xgb.plot.importance(importance_matrix = mat[1:10])
 
 #Xgb tree
 xgb.plot.tree(
